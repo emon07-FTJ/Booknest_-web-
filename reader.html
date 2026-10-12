@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest+ | Book Reader</title>
+    <link rel="stylesheet" href="reader.css">
+</head>
+<body>
+
+    <header class="reader-header">
+        <a class="logo" href="../index.html">BookNest<span>+</span></a>
+        <a class="back-link" href="../index.html">Back to Home</a>
+    </header>
+
+    <main class="reader-container">
+        <section class="book-info">
+            <p class="eyebrow">BOOKNEST+ READER</p>
+            <h1 id="book-title">The Secret Garden</h1>
+            <p class="author">By Frances Hodgson Burnett</p>
+        </section>
+
+        <article class="book-page">
+            <div class="page-heading">
+                <span>THE SECRET GARDEN</span>
+                <span id="page-number">Page 1 of 5</span>
+            </div>
+
+            <h2 id="chapter-title">Chapter One</h2>
+            <div id="page-content" class="page-content"></div>
+
+            <div class="page-controls">
+                <button id="previous-btn" type="button">← Previous</button>
+                <span id="page-status">1 / 5</span>
+                <button id="next-btn" type="button">Next →</button>
+            </div>
+        </article>
+
+        <p class="reader-note">
+            Enjoy your reading journey with BookNest+.
+        </p>
+    </main>
+
+    <script src="reader.js"></script>
+</body>
+</html>
