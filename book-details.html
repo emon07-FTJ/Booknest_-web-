@@ -1,0 +1,67 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest+ | Book Details</title>
+    <link rel="stylesheet" href="wishlist.css">
+    <script src="wishlist.js" defer></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>BookNest<span>+</span></h1>
+        <p>Discover your next favourite book</p>
+    </header>
+
+    <nav class="navigation">
+        <a href="book-details.html">Book Details</a>
+        <a href="wishlist.html">My Wishlist</a>
+    </nav>
+
+    <main class="page-container">
+        <section class="book-card">
+            <div class="book-cover">
+                <span>BOOKNEST+</span>
+                <h2>The Secret Garden</h2>
+                <p>Frances Hodgson Burnett</p>
+            </div>
+
+            <div class="book-information">
+                <p class="category">Category: Classic Fiction</p>
+
+                <h2>The Secret Garden</h2>
+
+                <p><strong>Author:</strong> Frances Hodgson Burnett</p>
+                <p><strong>Publication Year:</strong> 1911</p>
+                <p><strong>Language:</strong> English</p>
+
+                <h3>About This Book</h3>
+
+                <p class="description">
+                    The Secret Garden is a classic novel about a young girl
+                    named Mary Lennox who discovers a hidden garden.
+                    As she explores and cares for the garden, she develops
+                    friendships and experiences personal growth.
+                </p>
+
+                <button type="button" id="wishlist-button" class="primary-btn">
+                    Add to Wishlist
+                </button>
+
+                <p id="details-message" class="message" aria-live="polite"></p>
+
+                <a href="wishlist.html" class="secondary-link">
+                    View My Wishlist
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 BookNest+. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

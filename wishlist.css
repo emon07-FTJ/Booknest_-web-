@@ -1,0 +1,258 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f1e8;
+    color: #26352d;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.site-header {
+    background: #234b3c;
+    color: white;
+    text-align: center;
+    padding: 28px 15px;
+}
+
+.site-header h1 {
+    font-size: 30px;
+    margin-bottom: 6px;
+}
+
+.site-header h1 span {
+    color: #e8c77b;
+}
+
+.site-header p {
+    font-size: 14px;
+    color: #e4eee8;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #dce3dc;
+}
+
+.navigation a {
+    color: #234b3c;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.navigation a:hover {
+    color: #b1842e;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 35px 20px;
+    flex: 1;
+}
+
+.book-card {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 30px;
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(35, 75, 60, 0.10);
+}
+
+.book-cover {
+    min-height: 340px;
+    padding: 25px;
+    background: #234b3c;
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 5px solid #e8c77b;
+}
+
+.book-cover span {
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 35px;
+    color: #e8c77b;
+}
+
+.book-cover h2 {
+    font-size: 27px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.book-cover p {
+    font-size: 13px;
+}
+
+.book-information h2 {
+    font-size: 28px;
+    margin: 12px 0 18px;
+}
+
+.book-information > p {
+    line-height: 1.7;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.category {
+    color: #36785c;
+    font-weight: bold;
+}
+
+.book-information h3 {
+    margin: 24px 0 10px;
+}
+
+.book-information .description {
+    line-height: 1.8;
+    color: #58665d;
+}
+
+.primary-btn {
+    display: block;
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    border: none;
+    border-radius: 7px;
+    background: #234b3c;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #18392d;
+}
+
+.secondary-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: #286b4c;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.secondary-link:hover {
+    text-decoration: underline;
+}
+
+.wishlist-section {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(35, 75, 60, 0.10);
+}
+
+.wishlist-section > h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.intro {
+    color: #68766e;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.wishlist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 0;
+    border-bottom: 1px solid #e0e6e0;
+}
+
+.wishlist-item h3 {
+    font-size: 18px;
+    margin-bottom: 7px;
+}
+
+.wishlist-item p {
+    font-size: 14px;
+    color: #68766e;
+    line-height: 1.6;
+}
+
+.remove-btn {
+    padding: 10px 13px;
+    border: none;
+    border-radius: 6px;
+    background: #b42318;
+    color: white;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.remove-btn:hover {
+    background: #8f1d14;
+}
+
+.empty-message {
+    padding: 22px 0;
+    color: #68766e;
+    line-height: 1.7;
+}
+
+.message {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    padding: 18px;
+    font-size: 12px;
+    color: #68766e;
+}
+
+@media (max-width: 650px) {
+    .page-container {
+        padding: 22px 14px;
+    }
+
+    .book-card {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .book-cover {
+        min-height: 280px;
+    }
+
+    .wishlist-section {
+        padding: 20px;
+    }
+
+    .wishlist-item {
+        align-items: flex-start;
+    }
+
+    .navigation {
+        gap: 18px;
+    }
+}
