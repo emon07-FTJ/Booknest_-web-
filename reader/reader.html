@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171329">
+  <title>BookNest+ Reader</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="reader.css">
+  <script src="reader.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html">
+      <span class="brand-mark">B+</span>
+      <span>BookNest<small>YOUR READING SPACE</small></span>
+    </a>
+
+    <div class="topbar-center">
+      <span class="status-dot"></span>
+      <span id="headerBookTitle">Loading your book...</span>
+    </div>
+
+    <div class="topbar-actions">
+      <button id="bookmarkTop" class="icon-button" aria-label="Bookmark this page" title="Bookmark page">♡</button>
+      <button id="themeToggle" class="icon-button" aria-label="Toggle reading theme" title="Change theme">☾</button>
+      <a class="home-link" href="../index.html">Exit reader ↗</a>
+    </div>
+  </header>
+
+  <div class="progress-strip">
+    <div id="progressFill"></div>
+  </div>
+
+  <main class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="mini-book" id="miniBook">
+          <span class="mini-book-label">BOOKNEST EDITION</span>
+          <span id="miniBookTitle" class="mini-book-title">YOUR NEXT READ</span>
+          <span id="miniBookAuthor" class="mini-book-author">ONLINE READER</span>
+          <span class="mini-book-decoration">✳</span>
+        </div>
+
+        <div class="book-meta">
+          <span class="overline">NOW READING</span>
+          <h1 id="sidebarTitle">Book title</h1>
+          <p id="sidebarAuthor">Author</p>
+        </div>
+      </div>
+
+      <div class="sidebar-section-heading">
+        <span>TABLE OF CONTENTS</span>
+        <span id="totalPageLabel">40 PAGES</span>
+      </div>
+
+      <label class="chapter-search">
+        <span>⌕</span>
+        <input id="chapterSearch" type="search" placeholder="Find a page..." aria-label="Find a page">
+      </label>
+
+      <nav id="chapterList" class="chapter-list" aria-label="Reading pages"></nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-bottom-icon">✦</div>
+        <p>Every page is a new beginning.</p>
+        <small>Take your time. Enjoy the journey.</small>
+      </div>
+    </aside>
+
+    <section class="reader-main">
+      <div class="reader-heading">
+        <div>
+          <div class="breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Reader</span></div>
+          <div class="chapter-kicker" id="chapterKicker">PAGE 01</div>
+          <h2 id="chapterHeading">Welcome to your reading space</h2>
+        </div>
+
+        <div class="reading-controls">
+          <button id="fontDown" class="control-button" aria-label="Decrease text size">A−</button>
+          <span id="fontSizeLabel">18 px</span>
+          <button id="fontUp" class="control-button" aria-label="Increase text size">A+</button>
+          <button id="bookmarkButton" class="control-button bookmark-button" aria-label="Bookmark this page">♡</button>
+        </div>
+      </div>
+
+      <div class="reading-status">
+        <span><span class="status-dot"></span> FOCUS MODE</span>
+        <span id="pagePosition">Page 1 of 40</span>
+      </div>
+
+      <article class="paper" id="paper">
+        <div class="paper-topline">
+          <span id="paperBookTitle">BOOKNEST+</span>
+          <span id="paperPageNumber">01</span>
+        </div>
+
+        <div class="paper-body">
+          <div class="chapter-ornament">✳</div>
+          <h1 id="paperHeading">A New Chapter</h1>
+          <div class="ornament-line"><span></span> ✦ <span></span></div>
+
+          <div id="pageContent" class="page-content">
+            <p>Your reading space is ready.</p>
+          </div>
+
+          <div class="reading-note" id="readingNote">
+            <span>✦</span>
+            <p>This is a sample reading page.</p>
+          </div>
+        </div>
+
+        <div class="paper-footer">
+          <span>BOOKNEST+ READER</span>
+          <span id="paperFooterPage">1</span>
+        </div>
+      </article>
+
+      <div class="page-navigation">
+        <button id="previousPage" class="page-button previous-button">
+          <span class="button-arrow">←</span>
+          <span><small>GO BACK</small><strong>Previous page</strong></span>
+        </button>
+
+        <div class="page-indicator">
+          <span id="currentPageNumber">01</span>
+          <span class="indicator-divider">/</span>
+          <span id="lastPageNumber">40</span>
+        </div>
+
+        <button id="nextPage" class="page-button next-button">
+          <span><small>KEEP READING</small><strong>Next page</strong></span>
+          <span class="button-arrow">→</span>
+        </button>
+      </div>
+
+      <div class="bottom-progress">
+        <div>
+          <span>YOUR READING JOURNEY</span>
+          <strong id="bottomProgressLabel">1 of 40 pages</strong>
+        </div>
+        <div class="bottom-progress-track"><div id="bottomProgressFill"></div></div>
+      </div>
+
+      <footer class="reader-footer">
+        <span>Made for readers, with ♥</span>
+        <button id="backToTop">Back to top ↑</button>
+      </footer>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
