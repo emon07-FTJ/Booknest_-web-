@@ -1,0 +1,70 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest+ | Explore Books</title>
+    <link rel="stylesheet" href="books.css">
+    <script src="books.js" defer></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>BookNest<span>+</span></h1>
+        <p>Discover books. Explore ideas.</p>
+    </header>
+
+    <nav class="navigation">
+        <a href="books.html">Explore Books</a>
+    </nav>
+
+    <main class="page-container">
+        <section class="intro">
+            <h2>Explore Our Books</h2>
+            <p>Find your next favourite book from our collection.</p>
+        </section>
+
+        <section class="search-section">
+            <label for="search-input">Search by title or author</label>
+
+            <input
+                type="search"
+                id="search-input"
+                placeholder="Enter book title or author..."
+            >
+
+            <label for="category-filter">Choose a category</label>
+
+            <select id="category-filter">
+                <option value="All">All Categories</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Science">Science</option>
+                <option value="History">History</option>
+            >
+
+            </select>
+
+            <button type="button" id="clear-button" class="clear-btn">
+                Clear Filters
+            </button>
+        </section>
+
+        <section>
+            <h2 class="section-title">Available Books</h2>
+            <p id="result-count" class="result-count"></p>
+            <div id="books-container" class="books-grid"></div>
+
+            <p id="empty-message" class="empty-message" hidden>
+                No books found. Try another search or category.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 BookNest+. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
