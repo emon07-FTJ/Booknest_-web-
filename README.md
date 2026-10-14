@@ -2,104 +2,91 @@
 
 ### Community-Based Reading & Self-Publishing Platform
 
-BookNest+ is a web-based platform designed to help users discover books and enjoy an engaging reading experience.
+BookNest+ is a web-based book discovery and reading platform designed to help readers explore books, discover different genres, and enjoy a user-friendly online reading experience. The project focuses on a clean interface, organized book categories, and a dedicated reading environment.
 
-## Project Features
+## Overview
 
-- User-friendly homepage
-- Book discovery and categories
-- Login and signup pages
-- Clean and consistent user interface
-- Responsive website design
+BookNest+ aims to create a convenient digital space where users can discover books and access reading features through a simple and engaging website interface.
+
+## Features
+
+- **Interactive Homepage** — A clean and engaging landing page.
+- **Book Categories** — Explore books across different genres.
+- **Featured Books** — Browse selected books through the homepage.
+- **Reader Interface** — Access a dedicated interface for reading books.
+- **Reading Progress** — Track reading progress.
+- **Bookmarks** — Save reading positions for later.
+- **Reading Preferences** — Adjust font size and switch between light and dark themes.
+- **User-Friendly Design** — Consistent styling and intuitive navigation.
 
 ## Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript
-- Git and GitHub
+- Git & GitHub
 
 ## Project Structure
 
-- `index.html` — Homepage
-- `style.css` — Website styling
-- `script.js` — JavaScript functionality
-- `books.html` — Books page
-- `login.html` — Login page
-- `signup.html` — Signup page
+```text
+Booknest_-web-/
+├── index.html
+├── style.css
+├── script.js
+├── reader/
+│   ├── reader.html
+│   ├── reader.css
+│   └── reader.js
+└── README.md
+```
 
 ## My Contribution
 
 **Member 2 — Homepage & UI/Design**
 
-My responsibilities include:
+**Name:** Fariya Mustakin Aditi
 
-- Developing the homepage using HTML
-- Designing the user interface and page layout
-- Styling the website using CSS
-- Adding interactive functionality using JavaScript
-- Maintaining a consistent design across the homepage
-- Improving responsive design for different screen sizes
+My responsibilities in this project include:
 
-### Files I Worked On
+- Designing and developing the homepage.
+- Building the navigation bar, hero section, and book categories.
+- Creating the featured books section and homepage layout.
+- Maintaining consistent colors, typography, spacing, and visual styling.
+- Improving the website's user interface and overall user experience.
+- Connecting homepage book cards with the Reader feature.
+- Developing the Reader interface and its reading-related interactions.
+- Implementing reading progress, bookmarks, font-size controls, and reading themes.
 
-- `index.html`
-- `style.css`
-- `script.js`
+## Academic Information
 
-## How to Run the Project
+| Item | Details |
+|---|---|
+| Project Name | BookNest+ |
+| Course | Web Programming Laboratory |
+| Course Code | CSE-3108 |
+| Group | B-04 |
+| Batch | 19th |
+| Project Type | Academic Team Project |
+
+## Team Members
+
+- Shahriar Emon
+- Fariya Mustakin Aditi
+- Humayra Rahman
+- Nawshin Nahar
+- Tamanna Akter
+
+## Getting Started
 
 1. Clone or download the repository.
 2. Open the project folder in Visual Studio Code.
-3. Open `index.html` in a browser or use the Live Server extension.
+3. Open `index.html` in a web browser or use the VS Code Live Server extension.
+4. Explore the homepage and navigate to the available reading features.
+
+## Repository
+
+GitHub: https://github.com/emon07-FTJ/Booknest_-web-
 
 ---
 
-*BookNest+ — Discover Your Next Favourite Read.*
-# Booknest_-web-
-# BookNest+
-
-BookNest+ is a community-based reading and self-publishing platform developed using HTML, CSS, and JavaScript.
-
-## Project Features
-
-* User Login and Registration
-* Homepage and UI Design
-* Books, Categories, Search and Filtering
-* Wishlist and Book Details
-* Online Book Reader with Next and Previous Page Navigation
-
-## Team Members and Responsibilities
-
-| Member   | Responsibility                       |
-| -------- | ------------------------------------ |
-| Member 1 | Login and User System                |
-| Member 2 | Homepage and UI Design               |
-| Member 3 | Books, Categories and Search         |
-| Member 4 | Wishlist and Book Details            |
-| Member 5 | Book Reader, Testing and Integration |
-
-## Technologies Used
-
-* HTML
-* CSS
-* JavaScript
-* GitHub for Version Control and Collaboration
-
-## Development Workflow
-
-* Each team member works on a separate feature branch.
-* Changes are recorded using meaningful commit messages.
-* Pull Requests are reviewed before merging into the main branch.
-* The team tests the integrated project after major changes.
-
-## Future Scope
-
-* Backend integration
-* Database support
-* Secure user authentication
-* Improved reading and publishing features
-
-## Project Goal
-
-To create a convenient platform where readers can discover and read books and writers can share their work.
+*Developed collaboratively as part of the Web Programming Laboratory course.*

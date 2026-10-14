@@ -1157,3 +1157,78 @@ p {
     animation-duration: 0.01ms !important;
   }
 }
+/* Open Library API Search Results */
+
+.api-book-results {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.api-book-card {
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #e2e8df;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+    transition: transform 0.2s ease;
+}
+
+.api-book-card:hover {
+    transform: translateY(-4px);
+}
+
+.api-book-card img {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.api-book-card h3 {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #234b35;
+}
+
+.api-book-card p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 12px;
+}
+
+.api-book-card a {
+    display: inline-block;
+    color: #287447;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.api-book-card a:hover {
+    text-decoration: underline;
+}
+
+#apiBookStatus {
+    margin: 15px 0;
+    color: #234b35;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .api-book-results {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .api-book-results {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .api-book-card {
+        padding: 10px;
+    }
+}

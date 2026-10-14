@@ -200,3 +200,99 @@ bookModal.addEventListener("click", event => {
 
 document.getElementById("currentYear").textContent =
   new Date().getFullYear();
+  /* 7. OPEN LIBRARY API SEARCH */
+
+const openLibraryInput = document.getElementById("bookSearch");
+const openLibraryResults = document.getElementById("apiBookResults");
+const openLibraryStatus = document.getElementById("apiBookStatus");
+
+let openLibraryTimer;
+
+openLibraryInput.addEventListener("input", () => {
+    clearTimeout(openLibraryTimer);
+
+    const query = openLibraryInput.value.trim();
+
+    openLibraryResults.replaceChildren();
+    openLibraryStatus.textContent = "";
+
+    if (!query) {
+        return;
+    }
+
+    openLibraryStatus.textContent = "Searching books...";
+
+    openLibraryTimer = setTimeout(async () => {
+        try {
+            const url =
+                "https://openlibrary.org/search.json?q=" +
+                encodeURIComponent(query) +
+                "&limit=10";
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error("API request failed");
+            }
+
+            const data = await response.json();
+            const books = data.docs || [];
+
+            openLibraryResults.replaceChildren();
+
+            if (books.length === 0) {
+                openLibraryStatus.textContent = "No books found.";
+                return;
+            }
+
+            books.forEach((book) => {
+                const card = document.createElement("div");
+                card.className = "api-book-card";
+
+                if (book.cover_i) {
+                    const image = document.createElement("img");
+
+                    image.src =
+                        "https://covers.openlibrary.org/b/id/" +
+                        book.cover_i +
+                        "-M.jpg";
+
+                    image.alt = (book.title || "Book") + " cover";
+                    image.loading = "lazy";
+
+                    card.appendChild(image);
+                }
+
+                const title = document.createElement("h3");
+                title.textContent = book.title || "Untitled";
+
+                const author = document.createElement("p");
+                author.textContent =
+                    "Author: " +
+                    (book.author_name?.slice(0, 3).join(", ") ||
+                        "Unknown");
+
+                const link = document.createElement("a");
+                link.textContent = "View Book Details";
+                link.href = book.key
+                    ? "https://openlibrary.org" + book.key
+                    : "https://openlibrary.org";
+
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+
+                card.append(title, author, link);
+                openLibraryResults.appendChild(card);
+            });
+
+            openLibraryStatus.textContent =
+                "Found " + books.length + " book results.";
+
+        } catch (error) {
+            openLibraryStatus.textContent =
+                "Could not load books. Please try again.";
+
+            console.error("Open Library API error:", error);
+        }
+    }, 400);
+});
