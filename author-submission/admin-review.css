@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f1e8;
+    color: #26352d;
+    min-height: 100vh;
+}
+
+header {
+    background: #234b3c;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+header a {
+    display: inline-block;
+    color: #e8c77b;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #e4eee8;
+}
+
+.container {
+    max-width: 950px;
+    margin: 35px auto;
+    padding: 0 16px;
+}
+
+.container h2 {
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #68766e;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.submission-card {
+    background: white;
+    padding: 22px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 18px rgba(35, 75, 60, 0.10);
+    overflow-wrap: anywhere;
+}
+
+.submission-card h3 {
+    color: #234b3c;
+    margin-bottom: 12px;
+}
+
+.submission-card p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.submission-content {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: #f8f8f5;
+    padding: 14px;
+    border-radius: 6px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #fff0c2;
+    color: #755400;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status.accepted {
+    background: #d9f3df;
+    color: #247342;
+}
+
+.status.declined {
+    background: #fde2e0;
+    color: #b42318;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.actions button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.accept-btn {
+    background: #247342;
+}
+
+.accept-btn:hover {
+    background: #18582f;
+}
+
+.decline-btn {
+    background: #b42318;
+}
+
+.decline-btn:hover {
+    background: #8f1c14;
+}
+
+.empty-message {
+    background: white;
+    padding: 22px;
+    border-radius: 8px;
+    color: #68766e;
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 22px auto;
+    }
+
+    .submission-card {
+        padding: 17px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}

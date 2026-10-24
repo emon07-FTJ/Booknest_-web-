@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f1e8;
+    color: #26352d;
+    min-height: 100vh;
+}
+
+header {
+    background: #234b3c;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+header a {
+    display: inline-block;
+    color: #e8c77b;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+
+header h1 {
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #e4eee8;
+}
+
+.container {
+    max-width: 750px;
+    margin: 35px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(35, 75, 60, 0.12);
+}
+
+.card h2 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #68766e;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin: 18px 0 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd6cf;
+    border-radius: 6px;
+    font: inherit;
+}
+
+textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #36785c;
+    border-color: transparent;
+}
+
+button {
+    width: 100%;
+    margin-top: 22px;
+    padding: 13px;
+    background: #234b3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #18392d;
+}
+
+#message {
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 20px auto;
+    }
+
+    .card {
+        padding: 20px 16px;
+    }
+}

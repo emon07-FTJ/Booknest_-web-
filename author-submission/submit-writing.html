@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Writing | BookNest+</title>
+    <link rel="stylesheet" href="submit-writing.css">
+    <script src="submit-writing.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html">← Back to Homepage</a>
+        <h1>BookNest+</h1>
+        <p>Share your story with our reading community.</p>
+    </header>
+
+    <main class="container">
+        <form id="submission-form" class="card">
+            <h2>Submit Your Writing</h2>
+            <p>Your submission will be reviewed by an admin.</p>
+
+            <label for="author">Author Name</label>
+            <input id="author" name="author" required maxlength="100">
+
+            <label for="title">Title of Your Writing</label>
+            <input id="title" name="title" required maxlength="150">
+
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="">Choose a category</option>
+                <option value="Story">Story</option>
+                <option value="Poetry">Poetry</option>
+                <option value="Novel">Novel</option>
+                <option value="Article">Article</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="content">Your Writing</label>
+            <textarea id="content" name="content"
+                rows="10" required minlength="20"
+                maxlength="20000"
+                placeholder="Write your original work here..."></textarea>
+
+            <button type="submit">Submit for Review</button>
+            <p id="message" role="status"></p>
+        </form>
+    </main>
+</body>
+</html>

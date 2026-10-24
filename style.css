@@ -1232,3 +1232,17 @@ p {
         padding: 10px;
     }
 }
+.submit-writing-link {
+    display: inline-block;
+    background: #234b3c;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s ease;
+}
+
+.submit-writing-link:hover {
+    background: #18392d;
+}
