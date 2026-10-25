@@ -257,3 +257,38 @@ h1, h2 { font-family: "Playfair Display", Georgia, serif; letter-spacing: -1.5px
   .cover-title { font-size: 17px; }
   .cover-atomic .cover-title { font-size: 21px; }
 }
+
+/* Responsive layout improvements */
+@media (max-width: 768px) {
+  .container {
+    width: 92%;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  button,
+  .btn {
+    max-width: 100%;
+  }
+}
