@@ -1,184 +1,542 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>BookNest+ | Discover Your Next Book</title>
-  <meta name="description" content="Discover books, explore categories and start reading with BookNest+.">
+
+  <meta name="description"
+    content="Discover books, explore categories, and find your next favourite read at BookNest+.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
+
 <body>
 
-<header class="navbar">
-  <a class="logo" href="index.html"><span>B+</span> BookNest</a>
+  <!-- NAVIGATION BAR -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
 
-  <nav class="nav-links">
-    <a class="active" href="#home">Home</a>
-    <a href="#categories">Categories</a>
-    <a href="#featured">Featured Books</a>
-    <a href="#about">About</a>
-  </nav>
+      <a href="#home" class="logo">
+        <span class="logo-icon">B+</span>
+        <span>BookNest<span class="logo-plus">+</span></span>
+      </a>
 
-  <div class="nav-actions">
-    <a class="login-link" href="login.html">Log in</a>
-    <a class="btn btn-small" href="signup.html">Join Us <span>↗</span></a>
-  </div>
-</header>
+      <button class="menu-toggle" id="menuToggle"
+        aria-label="Toggle navigation" aria-expanded="false">
+        ☰
+      </button>
 
-<main>
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <div class="eyebrow"><span class="live-dot"></span> YOUR NEXT CHAPTER STARTS HERE</div>
-
-      <h1>Discover Books.<br>Build Your <span>World.</span></h1>
-
-      <p>Find stories that move you, ideas that inspire you, and books that stay with you long after the last page.</p>
-
-      <div class="hero-actions">
-        <a href="#featured" class="btn">Explore Books <span>→</span></a>
-        <a href="#categories" class="text-link">Browse categories ↗</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#featured" class="nav-link">Featured Books</a>
+        <a href="#about" class="nav-link">About</a>
       </div>
 
-      <div class="hero-stats">
-        <div><strong>Explore</strong><small>Books for every mind</small></div>
-        <div><strong>Discover</strong><small>Your next favourite</small></div>
-        <div><strong>Read</strong><small>At your own pace</small></div>
-      </div>
-    </div>
-
-    <div class="hero-art">
-      <div class="art-glow"></div>
-      <div class="floating-note note-top">✦ A world of stories</div>
-
-      <div class="book-stack">
-        <div class="cover cover-back">
-          <span>THE ART<br>OF THINKING</span>
-          <small>Ideas that change everything</small>
-        </div>
-        <div class="cover cover-middle">
-          <span>THE<br>ALCHEMIST</span>
-          <small>Paulo Coelho</small>
-        </div>
-        <div class="cover cover-front">
-          <div class="cover-sun"></div>
-          <span>YOUR NEXT<br>GREAT READ</span>
-          <small>BEGIN HERE</small>
-        </div>
+      <div class="nav-actions">
+        <a class="home-icon-link" href="#home" aria-label="Go to homepage" title="Go to homepage">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m3 10 9-7 9 7"></path>
+            <path d="M5.5 9v11h13V9M9.5 20v-7h5v7"></path>
+          </svg>
+        </a>
+        <a href="#wishlistSection" class="wishlist-link">
+          ♡ <span>Favourites</span>
+        </a>
+        <a href="login.html" class="btn btn-outline" id="loginNavButton">Login</a>
+        <a href="signup.html" class="btn btn-primary">Join Us</a>
       </div>
 
-      <div class="floating-note note-bottom">Read. Imagine. Repeat. ↗</div>
+    </nav>
+  </header>
+
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+
+        <div class="hero-content">
+          <span class="eyebrow">
+            YOUR NEXT CHAPTER STARTS HERE
+          </span>
+
+          <h1>
+            Discover Books.<br>
+            <span>Build Your World.</span>
+          </h1>
+
+          <p class="hero-description">
+            Every book opens a new door. Explore inspiring stories,
+            discover new ideas, and find your next favourite read
+            with the BookNest+ community.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#featured" class="btn btn-primary btn-large">
+              Explore Books <span>→</span>
+            </a>
+
+            <a href="#categories" class="btn btn-text">
+              Browse Categories
+            </a>
+          </div>
+
+          <div class="hero-note">
+            <span class="note-icon">✦</span>
+            A little reading. A lot of discovery.
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image">
+            <img
+              src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1000&q=85"
+              alt="A peaceful library filled with books"
+            >
+            <div class="image-caption">
+              <span>MAKE TIME FOR STORIES</span>
+              <strong>Your reading journey awaits.</strong>
+            </div>
+          </div>
+
+          <div class="floating-note">
+            <span class="floating-icon">✧</span>
+            <div>
+              <strong>Read. Explore. Grow.</strong>
+              <p>One page at a time.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- SMALL INTRODUCTION -->
+    <section class="welcome-strip">
+      <div class="container welcome-inner">
+        <div>
+          <span class="section-kicker">WELCOME TO BOOKNEST+</span>
+          <h2>A home for every kind of reader.</h2>
+        </div>
+
+        <p>
+          From exciting adventures to ideas that change your life,
+          there is always something new to discover.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- CATEGORIES SECTION -->
+    <section class="section categories-section" id="categories">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">FIND YOUR NEXT READ</span>
+            <h2>Explore by Category</h2>
+            <p>Follow your curiosity. Find a story that speaks to you.</p>
+          </div>
+
+          <a href="#featured" class="text-link">Explore books →</a>
+        </div>
+
+        <div class="category-grid">
+
+          <a href="#featured" class="category-card"
+             data-category-link="Adventure">
+            <div class="category-image adventure-image">
+              <img
+                src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                alt="Mountains representing adventure">
+              <span class="category-number">01</span>
+            </div>
+            <div class="category-info">
+              <h3>Adventure</h3>
+              <p>Explore the unknown</p>
+              <span class="category-arrow">↗</span>
+            </div>
+          </a>
+
+          <a href="#featured" class="category-card"
+             data-category-link="Education">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80"
+                alt="Books and learning">
+              <span class="category-number">02</span>
+            </div>
+            <div class="category-info">
+              <h3>Education</h3>
+              <p>Learn something new</p>
+              <span class="category-arrow">↗</span>
+            </div>
+          </a>
+
+          <a href="#featured" class="category-card"
+             data-category-link="Fiction">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=600&q=80"
+                alt="An open book">
+              <span class="category-number">03</span>
+            </div>
+            <div class="category-info">
+              <h3>Fiction</h3>
+              <p>Stories that inspire</p>
+              <span class="category-arrow">↗</span>
+            </div>
+          </a>
+
+          <a href="#featured" class="category-card"
+             data-category-link="Biography">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80"
+                alt="Writing and personal stories">
+              <span class="category-number">04</span>
+            </div>
+            <div class="category-info">
+              <h3>Biography</h3>
+              <p>Real lives, real stories</p>
+              <span class="category-arrow">↗</span>
+            </div>
+          </a>
+
+          <a href="#featured" class="category-card"
+             data-category-link="Mystery">
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
+                alt="Mysterious forest">
+              <span class="category-number">05</span>
+            </div>
+            <div class="category-info">
+              <h3>Mystery</h3>
+              <p>Uncover the truth</p>
+              <span class="category-arrow">↗</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FEATURED BOOKS SECTION -->
+    <section class="section featured-section" id="featured">
+      <div class="container">
+
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">HANDPICKED FOR YOU</span>
+            <h2>Featured Books</h2>
+            <p>Some wonderful places to begin your reading journey.</p>
+          </div>
+          <span class="collection-label">THE READING COLLECTION</span>
+        </div>
+
+        <div class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            id="bookSearch"
+            placeholder="Search these featured books..."
+            aria-label="Search featured books">
+        </div>
+
+        <div class="filter-buttons" aria-label="Filter books by category">
+          <button class="filter-btn selected" data-filter="All">All Books</button>
+          <button class="filter-btn" data-filter="Adventure">Adventure</button>
+          <button class="filter-btn" data-filter="Education">Education</button>
+          <button class="filter-btn" data-filter="Fiction">Fiction</button>
+          <button class="filter-btn" data-filter="Biography">Biography</button>
+          <button class="filter-btn" data-filter="Mystery">Mystery</button>
+        </div>
+
+        <div class="book-grid" id="bookGrid">
+
+          <article class="book-card" data-category="Adventure"
+            data-title="the alchemist">
+            <div class="book-cover">
+              <img
+                src="https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg"
+                alt="The Alchemist book cover"
+                loading="lazy">
+              <span class="book-badge">Reader's Pick</span>
+              <button class="heart-btn" aria-label="Add The Alchemist to favourites"
+                aria-pressed="false">♡</button>
+            </div>
+            <div class="book-info">
+              <span class="book-category">ADVENTURE</span>
+              <h3>The Alchemist</h3>
+              <p class="book-author">Paulo Coelho</p>
+              <div class="book-bottom">
+                <span class="rating">★ 4.7</span>
+                <button class="details-btn" data-title="The Alchemist"
+                  data-author="Paulo Coelho"
+                  data-description="A young shepherd travels in search of a treasure and discovers lessons about dreams, courage, and the journey itself.">View Details ↗</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="book-card" data-category="Education"
+            data-title="atomic habits">
+            <div class="book-cover">
+              <img
+                src="https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg"
+                alt="Atomic Habits book cover"
+                loading="lazy">
+              <button class="heart-btn" aria-label="Add Atomic Habits to favourites"
+                aria-pressed="false">♡</button>
+            </div>
+            <div class="book-info">
+              <span class="book-category">EDUCATION</span>
+              <h3>Atomic Habits</h3>
+              <p class="book-author">James Clear</p>
+              <div class="book-bottom">
+                <span class="rating">★ 4.8</span>
+                <button class="details-btn" data-title="Atomic Habits"
+                  data-author="James Clear"
+                  data-description="A practical guide to understanding small habits and building better routines through consistent daily improvements.">View Details ↗</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="book-card" data-category="Fiction"
+            data-title="pride and prejudice">
+            <div class="book-cover">
+              <img
+                src="https://covers.openlibrary.org/b/isbn/9780141439518-L.jpg"
+                alt="Pride and Prejudice book cover"
+                loading="lazy">
+              <button class="heart-btn" aria-label="Add Pride and Prejudice to favourites"
+                aria-pressed="false">♡</button>
+            </div>
+            <div class="book-info">
+              <span class="book-category">FICTION</span>
+              <h3>Pride and Prejudice</h3>
+              <p class="book-author">Jane Austen</p>
+              <div class="book-bottom">
+                <span class="rating">★ 4.6</span>
+                <button class="details-btn" data-title="Pride and Prejudice"
+                  data-author="Jane Austen"
+                  data-description="A classic novel exploring love, family, first impressions, and social expectations in nineteenth-century England.">View Details ↗</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="book-card" data-category="Biography"
+            data-title="long walk to freedom">
+            <div class="book-cover">
+              <img
+                src="https://covers.openlibrary.org/b/isbn/9780316548182-L.jpg"
+                alt="Long Walk to Freedom book cover"
+                loading="lazy">
+              <button class="heart-btn" aria-label="Add Long Walk to Freedom to favourites"
+                aria-pressed="false">♡</button>
+            </div>
+            <div class="book-info">
+              <span class="book-category">BIOGRAPHY</span>
+              <h3>Long Walk to Freedom</h3>
+              <p class="book-author">Nelson Mandela</p>
+              <div class="book-bottom">
+                <span class="rating">★ 4.8</span>
+                <button class="details-btn" data-title="Long Walk to Freedom"
+                  data-author="Nelson Mandela"
+                  data-description="Nelson Mandela's autobiography recounts his life, struggle against apartheid, and journey toward freedom and equality.">View Details ↗</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="book-card" data-category="Mystery"
+            data-title="and then there were none">
+            <div class="book-cover">
+              <img
+                src="https://covers.openlibrary.org/b/isbn/9780062073488-L.jpg"
+                alt="And Then There Were None book cover"
+                loading="lazy">
+              <button class="heart-btn" aria-label="Add And Then There Were None to favourites"
+                aria-pressed="false">♡</button>
+            </div>
+            <div class="book-info">
+              <span class="book-category">MYSTERY</span>
+              <h3>And Then There Were None</h3>
+              <p class="book-author">Agatha Christie</p>
+              <div class="book-bottom">
+                <span class="rating">★ 4.7</span>
+                <button class="details-btn" data-title="And Then There Were None"
+                  data-author="Agatha Christie"
+                  data-description="Ten strangers gather on an isolated island, where a mysterious sequence of events creates a tense detective mystery.">View Details ↗</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <p class="empty-message" id="emptyMessage" hidden>
+          No matching books found. Try another search.
+        </p>
+
+        <div class="center-action">
+          <a href="Books.html" class="btn btn-outline">
+            Explore the Full Library →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section wishlist-section-home" id="wishlistSection">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">YOUR SAVED LIST</span>
+            <h2>My Wishlist</h2>
+            <p>Books you want to revisit later.</p>
+          </div>
+        </div>
+
+        <div class="wishlist-controls">
+          <input
+            type="search"
+            id="wishlistSearch"
+            class="wishlist-search"
+            placeholder="Search your wishlist..."
+            aria-label="Search wishlist books">
+        </div>
+
+        <div class="wishlist-list" id="wishlistList" aria-live="polite"></div>
+
+        <p class="wishlist-empty" id="wishlistEmpty">
+          Your wishlist is empty. Tap the heart on any book to save it here.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- COMMUNITY BANNER -->
+    <section class="community-section">
+      <div class="container community-inner">
+        <div>
+          <span class="section-kicker light-kicker">MORE THAN JUST BOOKS</span>
+          <h2>Every reader has a story.</h2>
+          <p>
+            Find new favourites, follow your curiosity, and make
+            reading part of your everyday life.
+          </p>
+        </div>
+
+        <a href="signup.html" class="btn btn-light">
+          Join BookNest+ <span>→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="about">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <a href="#home" class="logo footer-logo">
+            <span class="logo-icon">B+</span>
+            <span>BookNest<span class="logo-plus">+</span></span>
+          </a>
+
+          <p>
+            A community-based reading platform for curious minds,
+            passionate readers, and lifelong learners.
+          </p>
+
+          <span class="footer-tagline">Read. Explore. Grow.</span>
+        </div>
+
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <a href="#home">Home</a>
+          <a href="#categories">Categories</a>
+          <a href="#featured">Featured Books</a>
+          <a href="Books.html">All Books</a>
+        </div>
+
+        <div class="footer-column">
+          <h3>Categories</h3>
+          <a href="#categories">Adventure</a>
+          <a href="#categories">Education</a>
+          <a href="#categories">Fiction</a>
+          <a href="#categories">Biography & Mystery</a>
+        </div>
+
+        <div class="footer-column">
+          <h3>Get Started</h3>
+          <a href="login.html">Login</a>
+          <a href="signup.html">Create an Account</a>
+          <a href="#about">About BookNest+</a>
+          <p class="footer-small">Made for people who love to read.</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="currentYear"></span> BookNest+. All rights reserved.</p>
+        <a href="#home">Back to top ↑</a>
+      </div>
+
     </div>
-  </section>
+  </footer>
 
-  <section class="benefits">
-    <div><span class="benefit-icon">✦</span><div><strong>Discover</strong><small>Find books you will love</small></div></div>
-    <div><span class="benefit-icon">⌕</span><div><strong>Explore</strong><small>Search across categories</small></div></div>
-    <div><span class="benefit-icon">↗</span><div><strong>Read online</strong><small>Enjoy your reading journey</small></div></div>
-  </section>
 
-  <section class="section categories-section" id="categories">
-    <div class="section-heading">
-      <div><span class="section-label">FIND YOUR INTEREST</span><h2>Explore by category</h2></div>
-      <p>Every genre opens a different door.</p>
+  <!-- BOOK DETAILS MODAL -->
+  <dialog class="book-modal" id="bookModal">
+    <button class="modal-close" id="modalClose"
+      aria-label="Close details">×</button>
+
+    <span class="section-kicker">BOOK DETAILS</span>
+    <h2 id="modalTitle">Book Title</h2>
+    <p class="modal-author" id="modalAuthor"></p>
+    <p id="modalDescription"></p>
+    <p class="modal-note">
+      Open the reader to browse a 15-page original summary, or track this book and leave a review.
+    </p>
+    <div class="book-tracking-actions">
+      <button class="btn btn-primary" id="modalReadBook" type="button">Read book</button>
+      <button class="btn btn-outline" id="modalStartReading" type="button">Start reading</button>
+      <button class="btn btn-outline" id="modalMarkCompleted" type="button">Mark completed</button>
     </div>
-
-    <div class="category-grid">
-      <button class="category-card selected" data-category="All">
-        <span class="category-symbol">✧</span><strong>All Books</strong><small>Explore everything</small>
-      </button>
-      <button class="category-card" data-category="Fiction">
-        <span class="category-symbol">◈</span><strong>Fiction</strong><small>Worlds of imagination</small>
-      </button>
-      <button class="category-card" data-category="Self-help">
-        <span class="category-symbol">✳</span><strong>Self-help</strong><small>Grow every day</small>
-      </button>
-      <button class="category-card" data-category="Biography">
-        <span class="category-symbol">◎</span><strong>Biography</strong><small>Lives that inspire</small>
-      </button>
-      <button class="category-card" data-category="Mystery">
-        <span class="category-symbol">⌘</span><strong>Mystery</strong><small>Follow the clues</small>
-      </button>
-    </div>
-  </section>
-
-  <section class="section featured-section" id="featured">
-    <div class="section-heading">
-      <div><span class="section-label">THE BOOKSHELF</span><h2>Books worth your time<span class="purple-dot">.</span></h2></div>
-      <a class="text-link" href="#featured">Explore collection ↗</a>
-    </div>
-
-    <div class="toolbar">
-      <label class="search-box">
-        <span>⌕</span>
-        <input id="bookSearch" type="search" placeholder="Search title, author or genre...">
-      </label>
-      <select id="categorySelect" aria-label="Filter books by category">
-        <option value="All">All categories</option>
-        <option value="Fiction">Fiction</option>
-        <option value="Self-help">Self-help</option>
-        <option value="Biography">Biography</option>
-        <option value="Mystery">Mystery</option>
+    <p class="tracking-message" id="trackingMessage" role="status" aria-live="polite"></p>
+    <form class="book-review-form" id="bookReviewForm">
+      <h3>Write a review</h3>
+      <label for="reviewRating">Your rating</label>
+      <select id="reviewRating" required>
+        <option value="5">★★★★★ — Loved it</option>
+        <option value="4">★★★★☆ — Really good</option>
+        <option value="3">★★★☆☆ — It was good</option>
+        <option value="2">★★☆☆☆ — Not for me</option>
+        <option value="1">★☆☆☆☆ — Disappointing</option>
       </select>
-    </div>
-
-    <div class="book-grid" id="bookGrid">
-
-      <article class="book-card" data-title="The Alchemist" data-author="Paulo Coelho" data-category="Fiction">
-        <a class="book-cover cover-alchemist" href="reader/reader.html?id=alchemist">
-          <span class="cover-kicker">A NOVEL</span><span class="cover-title">THE<br>ALCHEMIST</span><span class="cover-author">PAULO COELHO</span>
-        </a>
-        <div class="book-info"><span class="book-category">FICTION</span><h3>The Alchemist</h3><p>Paulo Coelho</p><div class="book-bottom"><span class="read-label">Online reader</span><a class="read-btn" href="reader/reader.html?id=alchemist" aria-label="Read The Alchemist">→</a></div></div>
-      </article>
-
-      <article class="book-card" data-title="Atomic Habits" data-author="James Clear" data-category="Self-help">
-        <a class="book-cover cover-atomic" href="reader/reader.html?id=atomic-habits">
-          <span class="cover-kicker">TINY CHANGES</span><span class="cover-title">ATOMIC<br>HABITS</span><span class="cover-author">JAMES CLEAR</span>
-        </a>
-        <div class="book-info"><span class="book-category">SELF-HELP</span><h3>Atomic Habits</h3><p>James Clear</p><div class="book-bottom"><span class="read-label">Online reader</span><a class="read-btn" href="reader/reader.html?id=atomic-habits" aria-label="Read Atomic Habits">→</a></div></div>
-      </article>
-
-      <article class="book-card" data-title="Pride and Prejudice" data-author="Jane Austen" data-category="Fiction">
-        <a class="book-cover cover-pride" href="reader/reader.html?id=pride-and-prejudice">
-          <span class="cover-kicker">JANE AUSTEN</span><span class="cover-title">PRIDE &<br>PREJUDICE</span><span class="cover-author">A CLASSIC NOVEL</span>
-        </a>
-        <div class="book-info"><span class="book-category">FICTION</span><h3>Pride and Prejudice</h3><p>Jane Austen</p><div class="book-bottom"><span class="read-label">Online reader</span><a class="read-btn" href="reader/reader.html?id=pride-and-prejudice" aria-label="Read Pride and Prejudice">→</a></div></div>
-      </article>
-
-      <article class="book-card" data-title="Long Walk to Freedom" data-author="Nelson Mandela" data-category="Biography">
-        <a class="book-cover cover-freedom" href="reader/reader.html?id=long-walk-to-freedom">
-          <span class="cover-kicker">AN AUTOBIOGRAPHY</span><span class="cover-title">LONG WALK<br>TO FREEDOM</span><span class="cover-author">NELSON MANDELA</span>
-        </a>
-        <div class="book-info"><span class="book-category">BIOGRAPHY</span><h3>Long Walk to Freedom</h3><p>Nelson Mandela</p><div class="book-bottom"><span class="read-label">Online reader</span><a class="read-btn" href="reader/reader.html?id=long-walk-to-freedom" aria-label="Read Long Walk to Freedom">→</a></div></div>
-      </article>
-
-      <article class="book-card" data-title="And Then There Were None" data-author="Agatha Christie" data-category="Mystery">
-        <a class="book-cover cover-mystery" href="reader/reader.html?id=and-then-there-were-none">
-          <span class="cover-kicker">A MYSTERY</span><span class="cover-title">AND THEN<br>THERE WERE<br>NONE</span><span class="cover-author">AGATHA CHRISTIE</span>
-        </a>
-        <div class="book-info"><span class="book-category">MYSTERY</span><h3>And Then There Were None</h3><p>Agatha Christie</p><div class="book-bottom"><span class="read-label">Online reader</span><a class="read-btn" href="reader/reader.html?id=and-then-there-were-none" aria-label="Read And Then There Were None">→</a></div></div>
-      </article>
-
-    </div>
-    <p class="empty-message" id="emptyMessage" hidden>No books found. Try another search.</p>
-  </section>
-
-  <section class="cta-section" id="about">
-    <div><span class="section-label">YOUR NEXT CHAPTER</span><h2>A good book can change<br>the way you see the world.</h2><p>Find a story. Make some time. Let your imagination wander.</p></div>
-    <a href="#featured" class="btn btn-light">Find your next read ↗</a>
-  </section>
-</main>
-
-<footer class="footer">
-  <a class="logo footer-logo" href="index.html"><span>B+</span> BookNest</a>
-  <p>A little corner of the internet for people who love books.</p>
-  <div class="footer-links"><a href="#home">Home</a><a href="#categories">Categories</a><a href="#featured">Books</a><a href="#about">About</a></div>
-  <small>© 2026 BookNest+. Made for readers.</small>
-</footer>
+      <label for="reviewText">Your review</label>
+      <textarea id="reviewText" rows="3" maxlength="500" placeholder="What did you think of this book?" required></textarea>
+      <button class="btn btn-primary" type="submit">Save review</button>
+    </form>
+    <button class="btn btn-primary" id="modalDone">Done</button>
+  </dialog>
 
 </body>
 </html>
