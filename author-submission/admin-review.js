@@ -1,56 +1,27 @@
 const submissionList = document.getElementById("submission-list");
 
-function getSubmissions() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem("booknestSubmissions") || "[]"
-        );
+async function loadSubmissions() {
+    submissionList.textContent = "Loading submissions...";
 
-        return Array.isArray(data) ? data : [];
-    } catch (error) {
-        return [];
-    }
-}
+    const { data, error } = await supabaseClient
+        .from("submissions")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-function saveSubmissions(submissions) {
-    localStorage.setItem(
-        "booknestSubmissions",
-        JSON.stringify(submissions)
-    );
-}
-
-function updateStatus(id, newStatus) {
-    const submissions = getSubmissions();
-
-    const updatedSubmissions = submissions.map(function (submission) {
-        if (submission.id === id) {
-            return {
-                ...submission,
-                status: newStatus
-            };
-        }
-
-        return submission;
-    });
-
-    saveSubmissions(updatedSubmissions);
-    displaySubmissions();
-}
-
-function displaySubmissions() {
-    const submissions = getSubmissions();
-
-    submissionList.replaceChildren();
-
-    if (submissions.length === 0) {
-        const emptyMessage = document.createElement("p");
-        emptyMessage.className = "empty-message";
-        emptyMessage.textContent = "No writing submissions yet.";
-        submissionList.appendChild(emptyMessage);
+    if (error) {
+        console.error(error);
+        submissionList.textContent = "Could not load submissions.";
         return;
     }
 
-    submissions.forEach(function (submission) {
+    submissionList.innerHTML = "";
+
+    if (!data || data.length === 0) {
+        submissionList.textContent = "No submissions found.";
+        return;
+    }
+
+    data.forEach((submission) => {
         const card = document.createElement("article");
         card.className = "submission-card";
 
@@ -58,54 +29,52 @@ function displaySubmissions() {
         title.textContent = submission.title;
 
         const author = document.createElement("p");
-        author.textContent = "Author: " + submission.author;
+        author.textContent = "Author: " + submission.author_name;
 
         const category = document.createElement("p");
         category.textContent = "Category: " + submission.category;
 
-        const status = document.createElement("span");
-        status.className = "status";
-
-        if (submission.status === "Accepted") {
-            status.classList.add("accepted");
-        } else if (submission.status === "Declined") {
-            status.classList.add("declined");
-        }
-
+        const status = document.createElement("p");
         status.textContent = "Status: " + submission.status;
 
         const content = document.createElement("p");
-        content.className = "submission-content";
         content.textContent = submission.content;
 
         card.append(title, author, category, status, content);
 
         if (submission.status === "Pending") {
-            const actions = document.createElement("div");
-            actions.className = "actions";
-
             const acceptButton = document.createElement("button");
-            acceptButton.className = "accept-btn";
             acceptButton.textContent = "Accept";
-
-            acceptButton.addEventListener("click", function () {
+            acceptButton.addEventListener("click", () => {
                 updateStatus(submission.id, "Accepted");
             });
 
             const declineButton = document.createElement("button");
-            declineButton.className = "decline-btn";
             declineButton.textContent = "Decline";
-
-            declineButton.addEventListener("click", function () {
+            declineButton.addEventListener("click", () => {
                 updateStatus(submission.id, "Declined");
             });
 
-            actions.append(acceptButton, declineButton);
-            card.appendChild(actions);
+            card.append(acceptButton, declineButton);
         }
 
         submissionList.appendChild(card);
     });
 }
 
-displaySubmissions();
+async function updateStatus(id, newStatus) {
+    const { error } = await supabaseClient
+        .from("submissions")
+        .update({ status: newStatus })
+        .eq("id", id);
+
+    if (error) {
+        console.error(error);
+        alert("Could not update status. Check admin permissions.");
+        return;
+    }
+
+    loadSubmissions();
+}
+
+loadSubmissions();

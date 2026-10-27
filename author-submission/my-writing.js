@@ -1,71 +1,54 @@
-const submissionList = document.getElementById("my-submission-list");
+const submissionList = document.getElementById("submission-list");
 
-function displayMySubmissions() {
-    let submissions = [];
+async function loadMySubmissions() {
+    submissionList.textContent = "Loading your submissions...";
 
-    try {
-        const savedData = localStorage.getItem("booknestSubmissions");
-        submissions = JSON.parse(savedData || "[]");
+    const { data: { user }, error: authError } =
+        await supabaseClient.auth.getUser();
 
-        if (!Array.isArray(submissions)) {
-            submissions = [];
-        }
-    } catch (error) {
-        submissions = [];
-    }
-
-    submissionList.replaceChildren();
-
-    if (submissions.length === 0) {
-        const message = document.createElement("p");
-        message.textContent = "You have not submitted any writing yet.";
-        submissionList.appendChild(message);
+    if (authError || !user) {
+        submissionList.textContent = "Please log in to view your submissions.";
         return;
     }
 
-    submissions.slice().reverse().forEach(function (submission) {
-        const card = document.createElement("div");
+    const { data, error } = await supabaseClient
+        .from("submissions")
+        .select("*")
+        .eq("author_id", user.id)
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error(error);
+        submissionList.textContent = "Could not load your submissions.";
+        return;
+    }
+
+    submissionList.innerHTML = "";
+
+    if (!data || data.length === 0) {
+        submissionList.textContent = "You haven't submitted any writing yet.";
+        return;
+    }
+
+    data.forEach((submission) => {
+        const card = document.createElement("article");
         card.className = "submission-card";
 
         const title = document.createElement("h3");
         title.textContent = submission.title;
 
-        const author = document.createElement("p");
-        author.textContent = "Author: " + submission.author;
-
         const category = document.createElement("p");
         category.textContent = "Category: " + submission.category;
 
         const status = document.createElement("p");
-        status.className = "status";
-
-        const currentStatus = submission.status || "Pending";
-        status.textContent = "Status: " + currentStatus;
-
-        if (currentStatus === "Accepted") {
-            status.classList.add("accepted");
-        } else if (currentStatus === "Declined") {
-            status.classList.add("declined");
-        }
-
-        const contentHeading = document.createElement("h4");
-        contentHeading.textContent = "Your Writing";
+        status.textContent = "Status: " + submission.status;
 
         const content = document.createElement("p");
-        content.className = "submission-content";
         content.textContent = submission.content;
 
-        card.append(
-            title,
-            author,
-            category,
-            status,
-            contentHeading,
-            content
-        );
-
+        card.append(title, category, status, content);
         submissionList.appendChild(card);
     });
 }
 
-displayMySubmissions();
+loadMySubmissions();

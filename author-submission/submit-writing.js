@@ -1,7 +1,7 @@
 const form = document.getElementById("submission-form");
 const message = document.getElementById("message");
 
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const author = document.getElementById("author").value.trim();
@@ -16,35 +16,31 @@ form.addEventListener("submit", function (event) {
         return;
     }
 
-    const submission = {
-        id: Date.now(),
-        author: author,
-        title: title,
-        category: category,
-        content: content,
-        status: "Pending"
-    };
+    const { data: { user }, error: authError } =
+        await supabaseClient.auth.getUser();
 
-    let submissions = [];
-
-    try {
-        submissions = JSON.parse(
-            localStorage.getItem("booknestSubmissions") || "[]"
-        );
-
-        if (!Array.isArray(submissions)) {
-            submissions = [];
-        }
-    } catch (error) {
-        submissions = [];
+    if (authError || !user) {
+        message.textContent = "Please log in before submitting your writing.";
+        message.style.color = "#b42318";
+        return;
     }
 
-    submissions.push(submission);
+    const { error } = await supabaseClient
+        .from("submissions")
+        .insert({
+            author_id: user.id,
+            author_name: author,
+            title: title,
+            category: category,
+            content: content
+        });
 
-    localStorage.setItem(
-        "booknestSubmissions",
-        JSON.stringify(submissions)
-    );
+    if (error) {
+        console.error(error);
+        message.textContent = "Submission failed. Please try again.";
+        message.style.color = "#b42318";
+        return;
+    }
 
     message.textContent =
         "Your writing has been submitted successfully for Admin review!";
