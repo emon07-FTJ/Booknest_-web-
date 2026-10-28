@@ -1,111 +1,476 @@
+/* ========================================================
+   BOOKNEST+ | WISHLIST & BOOK DETAILS STYLING
+   ======================================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+:root {
+    --primary: #234b3c;
+    --primary-dark: #16362a;
+    --primary-light: #2d5f4c;
+    --accent-gold: #c59b27;
+    --accent-gold-light: #fef8eb;
+    --cream: #fbf9f4;
+    --cream-dark: #f0ebe1;
+    --text-dark: #1b2620;
+    --text-muted: #5e6d64;
+    --border: #e2e8e3;
+    --card-bg: #ffffff;
+    --shadow-sm: 0 4px 12px rgba(35, 75, 60, 0.05);
+    --shadow-md: 0 10px 25px rgba(35, 75, 60, 0.08);
+    --shadow-lg: 0 16px 36px rgba(35, 75, 60, 0.12);
+    --radius: 12px;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f1e8;
-    color: #26352d;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    line-height: 1.6;
 }
 
+/* TOP NAVIGATION */
 .site-header {
-    background: #234b3c;
-    color: white;
-    text-align: center;
-    padding: 28px 15px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.site-header h1 {
-    font-size: 30px;
-    margin-bottom: 6px;
-}
-
-.site-header h1 span {
-    color: #e8c77b;
-}
-
-.site-header p {
-    font-size: 14px;
-    color: #e4eee8;
-}
-
-.navigation {
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
     display: flex;
-    justify-content: center;
-    gap: 25px;
-    padding: 15px;
-    background: #ffffff;
-    border-bottom: 1px solid #dce3dc;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.navigation a {
-    color: #234b3c;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
     text-decoration: none;
-    font-weight: bold;
+}
+
+.logo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    color: var(--accent-gold);
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.logo-plus {
+    color: var(--accent-gold);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
 }
 
-.navigation a:hover {
-    color: #b1842e;
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary);
+    font-weight: 600;
 }
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-submit {
+    background: #2a5847;
+    color: white;
+    font-size: 13px;
+    padding: 7px 14px;
+}
+
+.btn-submit:hover {
+    background: #1b3d30;
+}
+
+/* HERO BANNER */
+.wishlist-hero {
+    background: linear-gradient(135deg, #18372b 0%, #234b3c 60%, #1c4535 100%);
+    color: white;
+    padding: 50px 20px 42px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.wishlist-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 85% 20%, rgba(197, 155, 39, 0.16), transparent 50%);
+    pointer-events: none;
+}
+
+.wishlist-hero .eyebrow {
+    display: inline-block;
+    color: var(--accent-gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.wishlist-hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(30px, 4.5vw, 42px);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.wishlist-hero p {
+    color: #e2eee7;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 15px;
+}
+
+/* PAGE CONTAINER */
 .page-container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 35px 20px;
+    padding: 36px 20px 60px;
     flex: 1;
 }
 
+/* WISHLIST TOOLBAR */
+.wishlist-toolbar {
+    background: white;
+    padding: 18px 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.count-badge {
+    background: #e9f0eb;
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-clear-all {
+    background: transparent;
+    color: #b42318;
+    border: 1px solid #fecdc7;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-clear-all:hover {
+    background: #fef3f2;
+}
+
+.btn-browse {
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-browse:hover {
+    background: var(--primary-dark);
+}
+
+/* WISHLIST CARDS GRID */
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+.wishlist-card {
+    background: white;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 18px;
+    display: flex;
+    gap: 18px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: #ccd8cf;
+}
+
+.wishlist-cover {
+    width: 100px;
+    height: 140px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #eef3ef;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.wishlist-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wishlist-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.wishlist-category {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.wishlist-details h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+    line-height: 1.35;
+}
+
+.wishlist-author {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.wishlist-rating {
+    font-size: 12px;
+    color: #c58600;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.wishlist-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    align-items: center;
+}
+
+.btn-read-now {
+    flex: 1;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: 6px;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.btn-read-now:hover {
+    background: var(--primary-dark);
+}
+
+.btn-remove-item {
+    background: transparent;
+    color: #b42318;
+    border: 1px solid #fecdca;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-remove-item:hover {
+    background: #fee4e2;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: var(--radius);
+    border: 1px dashed var(--border);
+}
+
+.empty-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.empty-state h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    color: var(--text-muted);
+    max-width: 440px;
+    margin: 0 auto 24px;
+    font-size: 15px;
+}
+
+/* ========================================================
+   COMPATIBILITY STYLES FOR book-details.html
+   ======================================================== */
 .book-card {
     display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 30px;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
     background: #ffffff;
-    padding: 28px;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(35, 75, 60, 0.10);
+    padding: 34px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
 }
 
 .book-cover {
     min-height: 340px;
-    padding: 25px;
-    background: #234b3c;
+    padding: 28px;
+    background: linear-gradient(135deg, #1c4535 0%, #234b3c 100%);
     color: white;
-    border-radius: 8px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    border: 5px solid #e8c77b;
+    border: 4px solid #e8c77b;
+    box-shadow: 0 10px 25px rgba(35, 75, 60, 0.15);
 }
 
 .book-cover span {
     font-size: 12px;
     letter-spacing: 2px;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
     color: #e8c77b;
+    font-weight: 700;
 }
 
 .book-cover h2 {
-    font-size: 27px;
-    line-height: 1.4;
-    margin-bottom: 15px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 26px;
+    line-height: 1.35;
+    margin-bottom: 12px;
 }
 
 .book-cover p {
     font-size: 13px;
+    color: #dcece3;
 }
 
 .book-information h2 {
-    font-size: 28px;
-    margin: 12px 0 18px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 30px;
+    margin: 8px 0 16px;
+    color: var(--text-dark);
 }
 
 .book-information > p {
@@ -115,144 +480,88 @@ body {
 }
 
 .category {
-    color: #36785c;
-    font-weight: bold;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
 .book-information h3 {
     margin: 24px 0 10px;
+    font-size: 18px;
 }
 
 .book-information .description {
     line-height: 1.8;
-    color: #58665d;
+    color: #55635a;
+    font-size: 15px;
 }
 
 .primary-btn {
-    display: block;
-    width: 100%;
-    margin-top: 22px;
-    padding: 13px;
+    padding: 12px 20px;
     border: none;
     border-radius: 7px;
-    background: #234b3c;
+    background: var(--primary);
     color: white;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
 .primary-btn:hover {
-    background: #18392d;
+    background: var(--primary-dark);
 }
 
 .secondary-link {
     display: inline-block;
-    margin-top: 18px;
-    color: #286b4c;
-    font-weight: bold;
-    font-size: 14px;
+    margin-top: 20px;
+    color: var(--primary);
+    font-weight: 600;
     text-decoration: none;
+    font-size: 14px;
 }
 
 .secondary-link:hover {
     text-decoration: underline;
 }
 
-.wishlist-section {
-    background: #ffffff;
-    padding: 28px;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(35, 75, 60, 0.10);
-}
-
-.wishlist-section > h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-.intro {
-    color: #68766e;
-    margin-bottom: 25px;
-    line-height: 1.6;
-}
-
-.wishlist-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    padding: 18px 0;
-    border-bottom: 1px solid #e0e6e0;
-}
-
-.wishlist-item h3 {
-    font-size: 18px;
-    margin-bottom: 7px;
-}
-
-.wishlist-item p {
-    font-size: 14px;
-    color: #68766e;
-    line-height: 1.6;
-}
-
-.remove-btn {
-    padding: 10px 13px;
-    border: none;
-    border-radius: 6px;
-    background: #b42318;
-    color: white;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.remove-btn:hover {
-    background: #8f1d14;
-}
-
-.empty-message {
-    padding: 22px 0;
-    color: #68766e;
-    line-height: 1.7;
-}
-
 .message {
-    margin-top: 12px;
+    margin-top: 14px;
     font-size: 14px;
-    line-height: 1.6;
+    font-weight: 500;
 }
 
-footer {
+/* FOOTER */
+.site-footer {
+    background: #18372b;
+    color: #bccbc2;
     text-align: center;
-    padding: 18px;
-    font-size: 12px;
-    color: #68766e;
+    padding: 24px 20px;
+    font-size: 13px;
+    margin-top: auto;
 }
 
-@media (max-width: 650px) {
-    .page-container {
-        padding: 22px 14px;
+.site-footer a {
+    color: var(--accent-gold);
+    text-decoration: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 6px;
     }
 
     .book-card {
         grid-template-columns: 1fr;
-        padding: 20px;
-    }
-
-    .book-cover {
-        min-height: 280px;
-    }
-
-    .wishlist-section {
-        padding: 20px;
-    }
-
-    .wishlist-item {
-        align-items: flex-start;
-    }
-
-    .navigation {
-        gap: 18px;
     }
 }

@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,11 @@ html
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookNest+ | Book Details</title>
     <link rel="stylesheet" href="wishlist.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./config/supabase.js"></script>
+    <script>
+        window.BOOK_DETAIL_ID = (new URLSearchParams(window.location.search)).get('id') || 'secret-garden';
+    </script>
     <script src="wishlist.js" defer></script>
 </head>
 <body>
@@ -24,31 +28,36 @@ html
         <section class="book-card">
             <div class="book-cover">
                 <span>BOOKNEST+</span>
-                <h2>The Secret Garden</h2>
-                <p>Frances Hodgson Burnett</p>
+                <h2 id="detailBookTitleCover">The Secret Garden</h2>
+                <p id="detailBookAuthorCover">Frances Hodgson Burnett</p>
             </div>
 
             <div class="book-information">
-                <p class="category">Category: Classic Fiction</p>
+                <p class="category" id="detailBookCategory">Category: Classic Fiction</p>
 
-                <h2>The Secret Garden</h2>
+                <h2 id="detailBookTitle">The Secret Garden</h2>
 
-                <p><strong>Author:</strong> Frances Hodgson Burnett</p>
+                <p><strong>Author:</strong> <span id="detailBookAuthor">Frances Hodgson Burnett</span></p>
                 <p><strong>Publication Year:</strong> 1911</p>
                 <p><strong>Language:</strong> English</p>
 
                 <h3>About This Book</h3>
 
-                <p class="description">
+                <p class="description" id="detailBookDescription">
                     The Secret Garden is a classic novel about a young girl
                     named Mary Lennox who discovers a hidden garden.
                     As she explores and cares for the garden, she develops
                     friendships and experiences personal growth.
                 </p>
 
-                <button type="button" id="wishlist-button" class="primary-btn">
-                    Add to Wishlist
-                </button>
+                <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                    <a id="detailReadBtn" href="reader/reader.html?id=secret-garden" class="primary-btn" style="background: #234b3c; color: white; text-decoration: none; padding: 12px 20px; font-weight: 600; text-align: center; border-radius: 6px;">
+                        📖 Start Reading
+                    </a>
+                    <button type="button" id="wishlist-button" class="primary-btn">
+                        Add to Wishlist
+                    </button>
+                </div>
 
                 <p id="details-message" class="message" aria-live="polite"></p>
 
@@ -62,6 +71,36 @@ html
     <footer>
         <p>&copy; 2026 BookNest+. All rights reserved.</p>
     </footer>
+
+    <script>
+        (async function() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const bookId = params.get('id') || 'secret-garden';
+                const readBtn = document.getElementById('detailReadBtn');
+                if (readBtn) {
+                    readBtn.href = 'reader/reader.html?id=' + encodeURIComponent(bookId);
+                }
+                if (window.supabaseClient) {
+                    const { data } = await window.supabaseClient
+                        .from('books')
+                        .select('*')
+                        .eq('id', bookId)
+                        .maybeSingle();
+                    if (data) {
+                        document.getElementById('detailBookTitle').textContent = data.title || '';
+                        document.getElementById('detailBookTitleCover').textContent = data.title || '';
+                        document.getElementById('detailBookAuthor').textContent = data.author || '';
+                        document.getElementById('detailBookAuthorCover').textContent = data.author || '';
+                        document.getElementById('detailBookCategory').textContent = 'Category: ' + (data.category || 'N/A');
+                        document.getElementById('detailBookDescription').textContent = data.description || document.getElementById('detailBookDescription').textContent;
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    </script>
 
 </body>
 </html>

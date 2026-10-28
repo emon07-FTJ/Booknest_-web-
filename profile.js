@@ -1,21 +1,12 @@
-let currentUser = (() => {
-  try {
-    return JSON.parse(localStorage.getItem("booknestUser") || "null");
-  } catch (error) {
-    console.error("Failed to read user profile:", error);
-    return null;
-  }
-})();
-
-let fullName = currentUser && typeof currentUser.name === "string" && currentUser.name.trim()
-  ? currentUser.name.trim()
-  : "Nawshin";
-let email = currentUser && typeof currentUser.email === "string" && currentUser.email.trim()
-  ? currentUser.email.trim()
-  : "nawshin@email.com";
 const defaultBio = "Reader of mystery and slow, thoughtful fiction. Always one chapter away from bedtime.";
+let currentUser = null;
+let profileData = {};
+let authUser = null;
+let fullName = "Reader";
+let email = "user@booknest.com";
+
 const defaultProfile = {
-  username: fullName.split(/\s+/)[0].toLowerCase(),
+  username: "reader",
   phone: "",
   location: "Dhaka, Bangladesh",
   genre: "Mystery",
@@ -100,8 +91,8 @@ const BOOK_CATALOG = [
 ];
 
 function renderProfile() {
-  const firstName = fullName.split(/\s+/)[0];
-  const profile = { ...defaultProfile, ...(currentUser || {}) };
+  const firstName = fullName.split(/\s+/)[0] || "Reader";
+  const profile = { ...defaultProfile, ...(profileData || {}) };
 
   document.querySelectorAll("[data-profile-name]").forEach((element) => {
     element.textContent = fullName;
@@ -116,38 +107,165 @@ function renderProfile() {
     element.textContent = Array.from(firstName)[0].toUpperCase();
   });
   document.querySelectorAll("[data-profile-bio]").forEach((element) => {
-    element.textContent = profile.bio;
+    element.textContent = profile.bio || defaultBio;
   });
   document.querySelectorAll("[data-profile-location]").forEach((element) => {
-    element.textContent = profile.location;
+    element.textContent = profile.location || defaultProfile.location;
   });
   document.querySelectorAll("[data-profile-genre]").forEach((element) => {
-    element.textContent = profile.genre;
+    element.textContent = profile.genre || defaultProfile.genre;
   });
+  const goalValue = profile.reading_goal || profile.readingGoal || defaultProfile.readingGoal;
   document.querySelectorAll("[data-reading-goal]").forEach((element) => {
-    element.textContent = profile.readingGoal;
+    element.textContent = goalValue;
   });
   const completedCount = getStoredTitles(COMPLETED_BOOKS_KEY).length;
-  document.querySelector("[data-goal-completed]").textContent = String(completedCount);
+  const goalCompletedEl = document.querySelector("[data-goal-completed]");
+  if (goalCompletedEl) goalCompletedEl.textContent = String(completedCount);
   const goalProgress = document.querySelector(".goal-track");
-  goalProgress.setAttribute("aria-valuemax", String(profile.readingGoal));
-  goalProgress.setAttribute("aria-valuenow", String(Math.min(completedCount, profile.readingGoal)));
-  goalProgress.querySelector("span").style.width =
-    `${Math.min(100, (completedCount / profile.readingGoal) * 100)}%`;
+  if (goalProgress) {
+    goalProgress.setAttribute("aria-valuemax", String(goalValue));
+    goalProgress.setAttribute("aria-valuenow", String(Math.min(completedCount, goalValue)));
+    const goalSpan = goalProgress.querySelector("span");
+    if (goalSpan) {
+      goalSpan.style.width = `${Math.min(100, (completedCount / goalValue) * 100)}%`;
+    }
+  }
 
-  document.getElementById("profileNameInput").value = fullName;
-  document.getElementById("profileEmailInput").value = email;
-  document.getElementById("profileUsernameInput").value = profile.username;
-  document.getElementById("profilePhoneInput").value = profile.phone;
-  document.getElementById("profileLocationInput").value = profile.location;
-  document.getElementById("profileGenreInput").value = profile.genre;
-  document.getElementById("profileBioInput").value = profile.bio;
-  document.getElementById("readingGoalInput").value = profile.readingGoal;
-  document.getElementById("currentPasswordInput").value = "";
-  document.getElementById("newPasswordInput").value = "";
+  const nameInput = document.getElementById("profileNameInput");
+  if (nameInput) nameInput.value = fullName;
+  const emailInput = document.getElementById("profileEmailInput");
+  if (emailInput) emailInput.value = email;
+  const usernameInput = document.getElementById("profileUsernameInput");
+  if (usernameInput) usernameInput.value = profile.username || firstName.toLowerCase();
+  const phoneInput = document.getElementById("profilePhoneInput");
+  if (phoneInput) phoneInput.value = profile.phone || "";
+  const locationInput = document.getElementById("profileLocationInput");
+  if (locationInput) locationInput.value = profile.location || defaultProfile.location;
+  const genreInput = document.getElementById("profileGenreInput");
+  if (genreInput) genreInput.value = profile.genre || defaultProfile.genre;
+  const bioInput = document.getElementById("profileBioInput");
+  if (bioInput) bioInput.value = profile.bio || defaultBio;
+  const goalInput = document.getElementById("readingGoalInput");
+  if (goalInput) goalInput.value = goalValue;
+  const currentPasswordInput = document.getElementById("currentPasswordInput");
+  if (currentPasswordInput) currentPasswordInput.value = "";
+  const newPasswordInput = document.getElementById("newPasswordInput");
+  if (newPasswordInput) newPasswordInput.value = "";
 }
 
-renderProfile();
+async function initProfile() {
+  try {
+    const { data: { user }, error } = await window.supabaseClient.auth.getUser();
+    if (error || !user) {
+      window.location.href = "login.html";
+      return;
+    }
+    authUser = user;
+    email = user.email || email;
+
+    const { data, error: profileError } = await window.supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profileError) {
+      console.error(profileError);
+    }
+
+    if (data) {
+      profileData = data;
+      fullName = data.full_name || data.username || (user.user_metadata && user.user_metadata.username) || fullName;
+    } else {
+      fullName = (user.user_metadata && user.user_metadata.username) || fullName;
+      profileData = { ...defaultProfile, username: fullName.toLowerCase() };
+    }
+
+    renderProfile();
+    initProfileForm();
+  } catch (err) {
+    console.error(err);
+    window.location.href = "login.html";
+  }
+}
+
+function initProfileForm() {
+  const profileForm = document.getElementById("profileForm");
+  if (!profileForm) return;
+
+  profileForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const profileMessage = document.getElementById("profileMessage");
+    if (!authUser) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const nameInput = document.getElementById("profileNameInput");
+    const usernameInput = document.getElementById("profileUsernameInput");
+    const phoneInput = document.getElementById("profilePhoneInput");
+    const locationInput = document.getElementById("profileLocationInput");
+    const genreInput = document.getElementById("profileGenreInput");
+    const bioInput = document.getElementById("profileBioInput");
+    const goalInput = document.getElementById("readingGoalInput");
+
+    fullName = nameInput ? nameInput.value.trim() : fullName;
+    profileData.full_name = fullName;
+    profileData.username = usernameInput ? usernameInput.value.trim() : profileData.username;
+    profileData.phone = phoneInput ? phoneInput.value.trim() : "";
+    profileData.location = locationInput ? locationInput.value.trim() : "";
+    profileData.genre = genreInput ? genreInput.value : "";
+    profileData.bio = bioInput ? bioInput.value.trim() : "";
+    profileData.reading_goal = goalInput ? parseInt(goalInput.value) || 20 : 20;
+
+    if (profileMessage) {
+      profileMessage.textContent = "Saving...";
+      profileMessage.classList.remove("error", "success");
+    }
+
+    try {
+      const { error } = await window.supabaseClient
+        .from("profiles")
+        .upsert({
+          id: authUser.id,
+          user_id: authUser.id,
+          email: authUser.email,
+          full_name: profileData.full_name,
+          username: profileData.username,
+          phone: profileData.phone,
+          location: profileData.location,
+          genre: profileData.genre,
+          bio: profileData.bio,
+          reading_goal: profileData.reading_goal,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'id' });
+
+      if (error) {
+        console.error(error);
+        if (profileMessage) {
+          profileMessage.textContent = error.message || "Failed to save profile.";
+          profileMessage.classList.add("error");
+        }
+        return;
+      }
+
+      if (profileMessage) {
+        profileMessage.textContent = "Profile updated successfully!";
+        profileMessage.classList.add("success");
+      }
+      renderProfile();
+    } catch (err) {
+      console.error(err);
+      if (profileMessage) {
+        profileMessage.textContent = "Something went wrong.";
+        profileMessage.classList.add("error");
+      }
+    }
+  });
+}
+
+initProfile();
 
 function getSavedBookFavourites() {
   try {

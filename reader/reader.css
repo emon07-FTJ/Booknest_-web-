@@ -557,13 +557,6 @@ button { cursor: pointer; }
 
 .page-content p { margin: 0 0 23px; }
 
-.page-content p:first-child::first-letter {
-  float: left;
-  padding: 6px 9px 0 0;
-  color: #7c59c8;
-  font: 700 52px/.8 "Playfair Display", Georgia, serif;
-}
-
 .reading-note {
   display: flex;
   gap: 12px;

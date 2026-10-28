@@ -3,32 +3,7 @@ const loginMessage = document.getElementById("loginMessage");
 
 const normalizeEmail = (value = "") => value.trim().toLowerCase();
 
-const getCurrentUser = () => {
-    try {
-        return JSON.parse(localStorage.getItem("booknestUser") || "null");
-    } catch (error) {
-        console.error("Failed to read current user:", error);
-        return null;
-    }
-};
-
-const getSavedUsers = () => {
-    try {
-        const storedUsers = JSON.parse(localStorage.getItem("booknestUsers") || "[]");
-        const currentUser = getCurrentUser();
-
-        if (Array.isArray(storedUsers) && storedUsers.length) {
-            return storedUsers;
-        }
-
-        return currentUser ? [currentUser] : [];
-    } catch (error) {
-        console.error("Failed to read saved users:", error);
-        return [];
-    }
-};
-
-loginForm.addEventListener("submit", function (event) {
+loginForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const email = normalizeEmail(document.getElementById("loginEmail").value);
@@ -40,42 +15,36 @@ loginForm.addEventListener("submit", function (event) {
         return;
     }
 
-    const savedUsers = getSavedUsers();
-    const matchedUser = savedUsers.find(
-        (user) =>
-            normalizeEmail(user.email || "") === email &&
-            String(user.password || "") === String(password)
-    );
+    loginMessage.textContent = "Logging in...";
+    loginMessage.className = "message";
 
-    if (matchedUser) {
-        const currentUser = getCurrentUser();
-        const profileFields = ["username", "phone", "location", "genre", "bio", "readingGoal"];
-        const userToSave = { ...matchedUser };
+    try {
+        const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
-        if (normalizeEmail(currentUser?.email || "") === email) {
-            profileFields.forEach((field) => {
-                if (Object.prototype.hasOwnProperty.call(currentUser, field)) {
-                    userToSave[field] = currentUser[field];
-                }
-            });
-
-            const userIndex = savedUsers.findIndex(
-                (user) => normalizeEmail(user.email || "") === email
-            );
-            savedUsers[userIndex] = userToSave;
-            localStorage.setItem("booknestUsers", JSON.stringify(savedUsers));
+        if (error) {
+            console.error(error);
+            loginMessage.textContent = error.message || "Login failed. Please check your credentials.";
+            loginMessage.className = "message error";
+            return;
         }
 
-        localStorage.setItem("booknestUser", JSON.stringify(userToSave));
-        loginMessage.textContent = "Login successful! Redirecting to homepage...";
+        const isAdmin = typeof window.isAdminEmail === "function" && window.isAdminEmail(email);
+        if (isAdmin) {
+            loginMessage.textContent = "👑 Admin login verified! Redirecting to Homepage...";
+        } else {
+            loginMessage.textContent = "Login successful! Redirecting to homepage...";
+        }
         loginMessage.className = "message success";
 
         setTimeout(() => {
             window.location.href = "index.html";
         }, 700);
-    } else {
-        loginMessage.textContent =
-            "Account not found. Please register first.";
+    } catch (err) {
+        console.error(err);
+        loginMessage.textContent = "Something went wrong. Please try again.";
         loginMessage.className = "message error";
     }
 });

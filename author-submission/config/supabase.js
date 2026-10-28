@@ -1,7 +1,27 @@
 const SUPABASE_URL = "https://aecmmfuurbrnqhpphwyr.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Z8BP_ly5j7yijV3gw9Xweg_udqVoFlU";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+if (typeof window.supabase !== "undefined") {
+    window.supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+}
+const supabaseClient = window.supabaseClient;
+
+// Configured Administrator Accounts
+window.ADMIN_EMAILS = [
+    "admin@booknest.com",
+    "admin@gmail.com"
+];
+
+window.isAdminEmail = function (email) {
+    if (!email) return false;
+    const clean = String(email).trim().toLowerCase();
+    return window.ADMIN_EMAILS.some(adm => adm.toLowerCase() === clean);
+};
+
+window.isAdminUser = function (user) {
+    if (!user || !user.email) return false;
+    return window.isAdminEmail(user.email);
+};

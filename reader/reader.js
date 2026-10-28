@@ -1,6 +1,18 @@
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const TOTAL_PAGES = 40;
+  let currentUserId = null;
+  let guestBookmarks = [];
+  let guestCurrentPage = 1;
+
+  try {
+    if (window.supabaseClient) {
+      const { data } = await window.supabaseClient.auth.getUser();
+      currentUserId = data.user ? data.user.id : null;
+    }
+  } catch (e) {
+    console.error(e);
+  }
 
   const books = {
     "alchemist": {
@@ -156,14 +168,111 @@ document.addEventListener("DOMContentLoaded", () => {
           ]
         }
       ]
+    },
+
+    "secret-garden": {
+      title: "The Secret Garden",
+      author: "Frances Hodgson Burnett",
+      cover: "THE SECRET GARDEN",
+      theme: "linear-gradient(145deg,#234b3c,#48745d 65%,#a8c5b5)",
+      samples: [
+        {
+          title: "There is No One Left",
+          paragraphs: [
+            "Welcome to the reading preview of The Secret Garden. Mary Lennox was a sour-faced, sickly child who lived in India until sudden misfortune altered her world.",
+            "Sent to live with her reclusive uncle at Misselthwaite Manor in Yorkshire, she discovers an ancient, forgotten garden walled off from the estate.",
+            "This demo passage introduces the reader interface. Enjoy exploring chapters, adjusting themes, and tracking reading progress."
+          ]
+        },
+        {
+          title: "The Robin and the Key",
+          paragraphs: [
+            "Guided by a curious robin, Mary discovers an ivory key buried in the earth, and soon after, an ivy-covered door leading into the mysterious hidden garden.",
+            "Working quietly to bring the dormant roses and flowers back to life, Mary begins to change, growing stronger, healthier, and full of wonder."
+          ]
+        },
+        {
+          title: "Life in the Garden",
+          paragraphs: [
+            "With the help of Dickon, a local boy who speaks the language of animals, and her cousin Colin, the garden becomes a sanctuary of healing and friendship.",
+            "Magic exists wherever care and companionship flourish. This sample page demonstrates the BookNest+ online reader layout."
+          ]
+        }
+      ]
     }
   };
 
   const params = new URLSearchParams(window.location.search);
   const requestedId = params.get("id") || "alchemist";
+
+  // Check Supabase if book not found in local presets
+  if (!books[requestedId] && window.supabaseClient) {
+    try {
+      const { data: dbBook } = await window.supabaseClient
+        .from("books")
+        .select("*")
+        .eq("id", requestedId)
+        .maybeSingle();
+
+      if (dbBook) {
+        books[requestedId] = {
+          title: dbBook.title,
+          author: dbBook.author,
+          cover: (dbBook.title || "BOOK").toUpperCase(),
+          theme: "linear-gradient(145deg,#124f56,#267d78 65%,#d4a45b)",
+          samples: [
+            {
+              title: "Chapter 1 - Introduction",
+              paragraphs: [
+                dbBook.description || ("Welcome to the reader preview of " + dbBook.title + "."),
+                "Every book opens a new door. BookNest+ brings readers and stories together in a clean, focused reading space.",
+                "Adjust font size, toggle between light and dark themes, and bookmark pages as you read."
+              ]
+            },
+            {
+              title: "Chapter 2 - Continuing the Journey",
+              paragraphs: [
+                "Stories allow us to experience life from new perspectives. Taking time to read each day helps broaden imagination and curiosity.",
+                "This sample chapter demonstrates reading controls, chapter navigation, and reading progress tracking."
+              ]
+            }
+          ]
+        };
+      }
+    } catch (dbErr) {
+      console.warn("Could not load book from Supabase:", dbErr);
+    }
+  }
+
   const bookId = Object.prototype.hasOwnProperty.call(books, requestedId)
     ? requestedId
-    : "alchemist";
+    : (() => {
+        const formattedTitle = requestedId.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+        books[requestedId] = {
+          title: formattedTitle,
+          author: "Classic Author",
+          cover: formattedTitle.toUpperCase(),
+          theme: "linear-gradient(145deg,#1f3d32,#2a5847 65%,#d5a458)",
+          samples: [
+            {
+              title: "Chapter 1 - The Journey Begins",
+              paragraphs: [
+                `Welcome to the BookNest+ reading preview of ${formattedTitle}. Immerse yourself in this curated work.`,
+                "Every story opens a new world of imagination, deep thought, and discovery.",
+                "Use the controls in the toolbar to adjust text size, switch between reading themes, and bookmark pages."
+              ]
+            },
+            {
+              title: "Chapter 2 - Deeper Insights",
+              paragraphs: [
+                "Curiosity, reflection, and quiet reading help us see ideas and perspectives with fresh clarity.",
+                "This preview is designed to demonstrate BookNest+'s reading experience and progress tracking."
+              ]
+            }
+          ]
+        };
+        return requestedId;
+      })();
 
   const book = books[bookId];
 
@@ -231,6 +340,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let bookmarks = safeRead(`${storagePrefix}-bookmarks`, []);
   if (!Array.isArray(bookmarks)) bookmarks = [];
+
+  if (currentUserId && window.supabaseClient) {
+    try {
+      const { data: progressData } = await window.supabaseClient
+        .from("reading_progress")
+        .select("current_page")
+        .eq("user_id", currentUserId)
+        .eq("book_id", bookId)
+        .maybeSingle();
+      if (progressData && progressData.current_page) {
+        currentPage = progressData.current_page;
+      }
+
+      const { data: bookmarkData } = await window.supabaseClient
+        .from("bookmarks")
+        .select("page_number")
+        .eq("user_id", currentUserId)
+        .eq("book_id", bookId);
+      if (bookmarkData) {
+        bookmarks = bookmarkData.map((b) => b.page_number);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    guestCurrentPage = safeRead(`${storagePrefix}-page`, 1);
+    if (typeof guestCurrentPage === "number") currentPage = guestCurrentPage;
+    guestBookmarks = bookmarks;
+  }
 
   let toastTimer;
 
@@ -305,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function toggleBookmark() {
+  async function toggleBookmark() {
     if (bookmarks.includes(currentPage)) {
       bookmarks = bookmarks.filter(page => page !== currentPage);
       showToast("Bookmark removed");
@@ -317,6 +455,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     safeWrite(`${storagePrefix}-bookmarks`, bookmarks);
     updateBookmarks();
+
+    if (currentUserId && window.supabaseClient) {
+      try {
+        if (bookmarks.includes(currentPage)) {
+          await window.supabaseClient
+            .from("bookmarks")
+            .upsert({ user_id: currentUserId, book_id: bookId, page_number: currentPage }, { onConflict: 'user_id,book_id,page_number' });
+        } else {
+          await window.supabaseClient
+            .from("bookmarks")
+            .delete()
+            .eq("user_id", currentUserId)
+            .eq("book_id", bookId)
+            .eq("page_number", currentPage);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 
   function updateThemeButton() {
@@ -398,7 +555,22 @@ document.addEventListener("DOMContentLoaded", () => {
     applyFontSize();
     safeWrite(`${storagePrefix}-page`, currentPage);
 
-    document.title = `${book.title} — Page ${currentPage} | BookNest+`;
+    if (currentUserId && window.supabaseClient) {
+      try {
+        window.supabaseClient
+          .from("reading_progress")
+          .upsert({
+            user_id: currentUserId,
+            book_id: bookId,
+            current_page: currentPage,
+            total_pages: TOTAL_PAGES,
+            last_read_at: new Date().toISOString()
+          }, { onConflict: 'user_id,book_id' });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    document.title = `${book.title} - Page ${currentPage} | BookNest+`;
   }
 
   function goToPage(pageNumber, shouldScroll = false) {

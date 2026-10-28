@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Your Writing | BookNest+</title>
     <link rel="stylesheet" href="submit-writing.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config/supabase.js"></script>
     <script src="submit-writing.js" defer></script>
 </head>
 <body>
@@ -20,10 +22,10 @@
             <p>Your submission will be reviewed by an admin.</p>
 
             <label for="author">Author Name</label>
-            <input id="author" name="author" required maxlength="100">
+            <input id="author" name="author" required maxlength="100" placeholder="Your name or pen name">
 
             <label for="title">Title of Your Writing</label>
-            <input id="title" name="title" required maxlength="150">
+            <input id="title" name="title" required maxlength="150" placeholder="Title of your story or poem">
 
             <label for="category">Category</label>
             <select id="category" name="category" required>
@@ -39,16 +41,11 @@
             <textarea id="content" name="content"
                 rows="10" required minlength="20"
                 maxlength="20000"
-                placeholder="Write your original work here..."></textarea>
+                placeholder="Write your original work here (at least 20 characters)..."></textarea>
 
-            <button type="submit">Submit for Review</button>
-            <p id="message" role="status"></p>
+            <button type="submit" id="submitBtn">Submit for Review</button>
+            <p id="message" role="status" style="margin-top: 15px; font-weight: 500;"></p>
         </form>
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../config/supabase.js"></script>
-<script src="submit-writing.js"></script>
-
 </body>
 </html>

@@ -1,69 +1,131 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookNest+ | Explore Books</title>
-    <link rel="stylesheet" href="books.css">
-    <script src="books.js" defer></script>
+    <title>BookNest+ | All Books Library</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="Books.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./config/supabase.js"></script>
+    <script src="Books.js" defer></script>
 </head>
 <body>
 
+    <!-- TOP NAVIGATION BAR -->
     <header class="site-header">
-        <h1>BookNest<span>+</span></h1>
-        <p>Discover books. Explore ideas.</p>
+        <nav class="navbar" aria-label="Main Navigation">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">B+</span>
+                <span>BookNest<span class="logo-plus">+</span></span>
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="Books.html" class="nav-link active">All Books</a>
+                <a href="index.html#categories" class="nav-link">Categories</a>
+                <a href="wishlist.html" class="nav-link">♡ Favourites</a>
+            </div>
+
+            <div class="nav-actions" id="navActions">
+                <a href="author-submission/submit-writing.html" class="btn btn-submit">✍️ Submit Writing</a>
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Join Us</a>
+            </div>
+        </nav>
     </header>
 
-    <nav class="navigation">
-        <a href="books.html">Explore Books</a>
-    </nav>
+    <!-- HERO HEADER -->
+    <section class="library-hero">
+        <span class="eyebrow">✦ CURATED COMMUNITY COLLECTION</span>
+        <h1>The BookNest+ Library</h1>
+        <p>Explore timeless classics, inspiring non-fiction, thrilling mysteries, and original community writing in our online reading sanctuary.</p>
+    </section>
 
+    <!-- MAIN PAGE CONTAINER -->
     <main class="page-container">
-        <section class="intro">
-            <h2>Explore Our Books</h2>
-            <p>Find your next favourite book from our collection.</p>
+
+        <!-- SEARCH & FILTER PANEL -->
+        <section class="controls-panel" aria-label="Book search and filters">
+            <div class="search-bar-row">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input
+                        type="search"
+                        id="search-input"
+                        class="search-input"
+                        placeholder="Search by title, author, category, or description..."
+                        aria-label="Search books"
+                    >
+                </div>
+
+                <select id="sort-select" class="sort-select" aria-label="Sort books">
+                    <option value="rating">★ Highest Rated</option>
+                    <option value="year-desc">🕒 Newest First</option>
+                    <option value="title-asc">🔤 Title (A to Z)</option>
+                </select>
+
+                <button type="button" id="clear-button" class="clear-btn">
+                    Reset Filters
+                </button>
+            </div>
+
+            <!-- Category Filter Chips -->
+            <div class="category-chips" role="radiogroup" aria-label="Filter by genre">
+                <button type="button" class="chip active" data-category="All">All Books</button>
+                <button type="button" class="chip" data-category="Fiction">Fiction</button>
+                <button type="button" class="chip" data-category="Adventure">Adventure</button>
+                <button type="button" class="chip" data-category="Fantasy">Fantasy</button>
+                <button type="button" class="chip" data-category="Mystery">Mystery</button>
+                <button type="button" class="chip" data-category="Education">Education</button>
+                <button type="button" class="chip" data-category="Biography">Biography</button>
+                <button type="button" class="chip" data-category="History">History</button>
+                <button type="button" class="chip" data-category="Science">Science</button>
+            </div>
         </section>
 
-        <section class="search-section">
-            <label for="search-input">Search by title or author</label>
+        <!-- RESULTS COUNT & SECTION TITLE -->
+        <div class="results-header">
+            <h2 class="section-title">Available Titles</h2>
+            <span id="result-count" class="result-badge">Loading collection...</span>
+        </div>
 
-            <input
-                type="search"
-                id="search-input"
-                placeholder="Enter book title or author..."
-            >
+        <!-- BOOKS GRID -->
+        <div id="books-container" class="books-grid">
+            <!-- Dynamically populated by Books.js -->
+        </div>
 
-            <label for="category-filter">Choose a category</label>
+        <!-- EMPTY STATE MESSAGE -->
+        <div id="empty-message" class="empty-state" hidden>
+            <span>📚</span>
+            <h3>No books matched your criteria</h3>
+            <p>Try searching with another keyword or selecting "All Books" to reset.</p>
+        </div>
 
-            <select id="category-filter">
-                <option value="All">All Categories</option>
-                <option value="Fiction">Fiction</option>
-                <option value="Fantasy">Fantasy</option>
-                <option value="Science">Science</option>
-                <option value="History">History</option>
-            >
-
-            </select>
-
-            <button type="button" id="clear-button" class="clear-btn">
-                Clear Filters
-            </button>
-        </section>
-
-        <section>
-            <h2 class="section-title">Available Books</h2>
-            <p id="result-count" class="result-count"></p>
-            <div id="books-container" class="books-grid"></div>
-
-            <p id="empty-message" class="empty-message" hidden>
-                No books found. Try another search or category.
-            </p>
-        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 BookNest+. All rights reserved.</p>
+    <!-- BOOK DETAILS MODAL -->
+    <dialog class="book-modal" id="bookModal">
+        <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+        <span class="modal-kicker" id="modalCategory">LITERATURE</span>
+        <h2 class="modal-title" id="modalTitle">Book Title</h2>
+        <p class="modal-author" id="modalAuthor">By Author</p>
+        <p class="modal-desc" id="modalDescription">Book description preview.</p>
+
+        <div class="modal-actions">
+            <button class="btn btn-outline" id="modalDone" type="button">Close</button>
+            <a class="btn btn-primary" id="modalReadBtn" href="reader/reader.html?id=alchemist">📖 Start Reading</a>
+        </div>
+    </dialog>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>&copy; 2026 <strong>BookNest+</strong>. A Community-Based Reading & Self-Publishing Platform. <a href="index.html">Back to Home ↑</a></p>
     </footer>
 
 </body>

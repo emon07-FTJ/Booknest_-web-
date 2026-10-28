@@ -3,34 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Admin Review | BookNest+</title>
+    <title>BookNest+ | Admin Review Dashboard</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="admin-review.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config/supabase.js"></script>
     <script src="admin-review.js" defer></script>
 </head>
 <body>
 
-    <header>
-        <a href="../index.html">← Back to Homepage</a>
-        <h1>BookNest+ Admin Panel</h1>
-        <p>Review writing submitted by authors.</p>
-    </header>
-
-    <main class="container">
-        <h2>Writing Submissions</h2>
-        <p class="description">
-            Review each submission and accept or decline it.
+    <!-- ACCESS DENIED VIEW (Shown only if unauthorized) -->
+    <div id="access-denied-view" class="access-denied-container" hidden>
+        <span class="access-denied-icon">🔒</span>
+        <h2>Administrator Access Required</h2>
+        <p id="access-denied-message">
+            This moderation dashboard is strictly restricted to BookNest+ Administrators. Please log in with an authorized admin account.
         </p>
-
-        <div id="submission-list">
-            <p>Loading submissions...</p>
+        <div class="access-denied-actions">
+            <a href="../login.html" class="btn-primary">Login as Admin</a>
+            <a href="../index.html" class="btn-outline">Return to Home</a>
         </div>
-    </main>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../config/supabase.js"></script>
-<script src="admin-review.js"></script>
+    <!-- ADMIN DASHBOARD VIEW (Shown only if authorized admin) -->
+    <div id="admin-dashboard-view" hidden>
+        
+        <!-- HEADER -->
+        <header class="admin-header">
+            <div class="admin-header-inner">
+                <div class="admin-title-wrap">
+                    <h1>👑 BookNest+ Admin Dashboard</h1>
+                    <p>Community Writing Moderation & Review Panel</p>
+                </div>
+                <div class="admin-top-actions">
+                    <span id="admin-user-badge" class="admin-badge">Admin</span>
+                    <a href="../index.html" class="btn-header">← Back to Homepage</a>
+                    <button type="button" id="admin-logout-btn" class="btn-header">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTAINER -->
+        <main class="container">
+
+            <!-- METRICS COUNTERS -->
+            <section class="metrics-grid">
+                <div class="metric-card">
+                    <span class="label">Total Submissions</span>
+                    <span id="metric-total" class="number">0</span>
+                </div>
+                <div class="metric-card pending">
+                    <span class="label">Pending Review</span>
+                    <span id="metric-pending" class="number">0</span>
+                </div>
+                <div class="metric-card accepted">
+                    <span class="label">Accepted</span>
+                    <span id="metric-accepted" class="number">0</span>
+                </div>
+                <div class="metric-card declined">
+                    <span class="label">Declined</span>
+                    <span id="metric-declined" class="number">0</span>
+                </div>
+            </section>
+
+            <!-- FILTER TABS -->
+            <nav class="filter-tabs" aria-label="Submission filter">
+                <button type="button" class="tab-btn active" data-status="All">All (<span id="tab-all-count">0</span>)</button>
+                <button type="button" class="tab-btn" data-status="Pending">Pending (<span id="tab-pending-count">0</span>)</button>
+                <button type="button" class="tab-btn" data-status="Accepted">Accepted (<span id="tab-accepted-count">0</span>)</button>
+                <button type="button" class="tab-btn" data-status="Declined">Declined (<span id="tab-declined-count">0</span>)</button>
+            </nav>
+
+            <!-- SUBMISSIONS LIST -->
+            <div id="submission-list">
+                <p>Loading submissions...</p>
+            </div>
+
+        </main>
+
+    </div>
 
 </body>
 </html>

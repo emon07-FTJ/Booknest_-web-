@@ -30,6 +30,81 @@ document.querySelectorAll(".nav-link").forEach(link => {
 });
 
 
+// 1.1 AUTH STATE & NAVBAR UI
+async function updateAuthUI() {
+  const navActions = document.querySelector(".nav-actions");
+  if (!navActions) return;
+
+  try {
+    if (!window.supabaseClient) return;
+
+    const { data: { session } } = await window.supabaseClient.auth.getSession();
+    const user = session?.user;
+
+    if (user) {
+      // Logged-in user: replace Login/Join Us with Profile + Logout.
+      // Submit Writing & My Submissions stay in static HTML — not added here again.
+      const username = user.user_metadata?.username || user.email?.split("@")[0] || "Profile";
+      const isAdmin = (typeof window.isAdminUser === "function" && window.isAdminUser(user)) ||
+                      (user.email && (user.email.toLowerCase() === "admin@booknest.com" || user.email.toLowerCase() === "admin@gmail.com"));
+
+      // Remove Login & Join Us buttons (only change for regular users)
+      navActions.querySelectorAll("a[href='login.html'], a[href='signup.html']").forEach(el => el.remove());
+
+      // Add Admin Panel button only for admin (insert before first btn-outline or at end)
+      if (isAdmin && !navActions.querySelector(".admin-panel-btn")) {
+        const adminBtn = document.createElement("a");
+        adminBtn.className = "submit-writing-link admin-panel-btn";
+        adminBtn.href = "author-submission/admin-review.html";
+        adminBtn.title = "Moderate Author Submissions";
+        adminBtn.style.cssText = "background:#a32222;border:1.5px solid #feb2b2;box-shadow:0 4px 12px rgba(163,34,34,0.35);";
+        adminBtn.textContent = "👑 Admin Panel";
+        navActions.appendChild(adminBtn);
+      }
+
+      // Add Profile link if not already present
+      if (!navActions.querySelector(".profile-link")) {
+        const profileLink = document.createElement("a");
+        profileLink.href = "profile.html";
+        profileLink.className = "btn btn-outline profile-link";
+        profileLink.title = "View Profile";
+        profileLink.textContent = "👤 " + username;
+        navActions.appendChild(profileLink);
+      }
+
+      // Add Logout button if not already present
+      if (!navActions.querySelector("#logoutBtn")) {
+        const logoutBtn = document.createElement("button");
+        logoutBtn.type = "button";
+        logoutBtn.id = "logoutBtn";
+        logoutBtn.className = "btn btn-primary";
+        logoutBtn.style.cursor = "pointer";
+        logoutBtn.textContent = "Logout";
+        logoutBtn.addEventListener("click", async () => {
+          await window.supabaseClient.auth.signOut();
+          window.location.reload();
+        });
+        navActions.appendChild(logoutBtn);
+      }
+    }
+  } catch (error) {
+    console.error("Auth check failed:", error);
+  }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", updateAuthUI);
+} else {
+  updateAuthUI();
+}
+
+if (window.supabaseClient && window.supabaseClient.auth) {
+  window.supabaseClient.auth.onAuthStateChange(() => {
+    updateAuthUI();
+  });
+}
+
+
 // 2. FEATURED BOOK SEARCH AND CATEGORY FILTER
 
 const searchInput = document.getElementById("bookSearch");
@@ -144,7 +219,7 @@ function updateHeartButtons() {
 }
 
 document.querySelectorAll(".heart-btn").forEach(button => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
     const card = button.closest(".book-card");
     const title = card.dataset.title;
 
@@ -156,6 +231,31 @@ document.querySelectorAll(".heart-btn").forEach(button => {
 
     saveFavourites();
     updateHeartButtons();
+
+    try {
+      if (window.supabaseClient) {
+        const { data: { user } } = await window.supabaseClient.auth.getUser();
+        if (user) {
+          const map = {
+            "the alchemist": "alchemist",
+            "atomic habits": "atomic-habits",
+            "pride and prejudice": "pride-and-prejudice",
+            "long walk to freedom": "long-walk-to-freedom",
+            "and then there were none": "and-then-there-were-none"
+          };
+          const bookId = map[title];
+          if (bookId) {
+            if (favourites.includes(title)) {
+              await window.supabaseClient.from("wishlist").insert({ user_id: user.id, book_id: bookId });
+            } else {
+              await window.supabaseClient.from("wishlist").delete().eq("user_id", user.id).eq("book_id", bookId);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
   });
 });
 
@@ -170,30 +270,60 @@ const modalAuthor = document.getElementById("modalAuthor");
 const modalDescription = document.getElementById("modalDescription");
 const modalClose = document.getElementById("modalClose");
 const modalDone = document.getElementById("modalDone");
+const modalReadBtn = document.getElementById("modalReadBtn");
 
-document.querySelectorAll(".details-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    modalTitle.textContent = button.dataset.title;
-    modalAuthor.textContent = "By " + button.dataset.author;
-    modalDescription.textContent = button.dataset.description;
+const bookIdMap = {
+  "the alchemist": "alchemist",
+  "atomic habits": "atomic-habits",
+  "pride and prejudice": "pride-and-prejudice",
+  "long walk to freedom": "long-walk-to-freedom",
+  "and then there were none": "and-then-there-were-none",
+  "the secret garden": "secret-garden"
+};
 
-    bookModal.showModal();
-  });
-});
+// Event delegation handles both static & dynamically rendered books
+document.addEventListener("click", event => {
+  const button = event.target.closest(".details-btn");
+  if (!button || !bookModal) return;
 
-modalClose.addEventListener("click", () => {
-  bookModal.close();
-});
+  const title = button.dataset.title || "Book Title";
+  const author = button.dataset.author || "Unknown";
+  const description = button.dataset.description || "No description provided.";
+  const rawId = button.dataset.id;
 
-modalDone.addEventListener("click", () => {
-  bookModal.close();
-});
+  modalTitle.textContent = title;
+  modalAuthor.textContent = "By " + author;
+  modalDescription.textContent = description;
 
-bookModal.addEventListener("click", event => {
-  if (event.target === bookModal) {
-    bookModal.close();
+  const normalized = title.trim().toLowerCase();
+  const bookId = rawId || bookIdMap[normalized] || normalized.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "alchemist";
+
+  if (modalReadBtn) {
+    modalReadBtn.href = `reader/reader.html?id=${encodeURIComponent(bookId)}`;
   }
+
+  bookModal.showModal();
 });
+
+if (modalClose) {
+  modalClose.addEventListener("click", () => {
+    bookModal.close();
+  });
+}
+
+if (modalDone) {
+  modalDone.addEventListener("click", () => {
+    bookModal.close();
+  });
+}
+
+if (bookModal) {
+  bookModal.addEventListener("click", event => {
+    if (event.target === bookModal) {
+      bookModal.close();
+    }
+  });
+}
 
 
 // 6. FOOTER CURRENT YEAR

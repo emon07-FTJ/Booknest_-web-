@@ -17,7 +17,10 @@
     rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./config/supabase.js"></script>
   <script src="script.js" defer></script>
+  <script src="home-books.js" defer></script>
 </head>
 
 <body>
@@ -38,24 +41,25 @@
 
       <div class="nav-links" id="navLinks">
         <a href="#home" class="nav-link active">Home</a>
+        <a href="Books.html" class="nav-link" style="color: var(--green-dark); font-weight: 600;">📚 All Books</a>
         <a href="#categories" class="nav-link">Categories</a>
         <a href="#featured" class="nav-link">Featured Books</a>
         <a href="#about" class="nav-link">About</a>
       </div>
 
       <div class="nav-actions">
-        <a href="#featured" class="wishlist-link">
+        <a href="wishlist.html" class="wishlist-link">
           ♡ <span>Favourites</span>
         </a>
         <a href="login.html" class="btn btn-outline">Login</a>
         <a href="signup.html" class="btn btn-primary">Join Us</a>
+        <a class="submit-writing-link" href="author-submission/submit-writing.html">
+          ✍️ Submit Writing
+        </a>
+        <a class="submit-writing-link" href="author-submission/my-writing.html" style="background:#2d4a60;">
+          📄 My Submissions
+        </a>
       </div>
-<a href="author-submission/submit-writing.html">
-    Submit Your Writing
-</a>
-      <a class="submit-writing-link" href="author-submission/my-writing.html">
-    My Submissions
-</a>
     </nav>
   </header>
 
@@ -392,12 +396,71 @@
           No matching books found. Try another search.
         </p>
 
-        <div class="center-action">
-          <a href="books.html" class="btn btn-outline">
-            Explore the Full Library →
-          </a>
-        </div>
+      </div>
+    </section>
 
+
+    <!-- THE GRAND BOOKNEST+ LIBRARY SHOWCASE -->
+    <section class="library-showcase-section">
+      <div class="container">
+        <div class="library-showcase-card">
+          <div class="showcase-content">
+            <div class="showcase-badge">
+              <span class="badge-icon">🏛️</span> COMPLETE REPOSITORY
+            </div>
+            <h2>Step Inside The Grand Library</h2>
+            <p class="showcase-desc">
+              Don't stop at the featured shelf. Our full library holds <strong>16+ curated classics, bestsellers, philosophical works, and thrilling mysteries</strong> — complete with instant in-browser reading, customizable font sizes, light/dark themes, and cloud bookmarks.
+            </p>
+
+            <div class="showcase-features">
+              <div class="feature-item">
+                <span class="f-icon">📖</span>
+                <div>
+                  <strong>Read Instantly</strong>
+                  <span>Zero downloads required</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <span class="f-icon">⚡</span>
+                <div>
+                  <strong>Live Search & Filters</strong>
+                  <span>Sort by genre & rating</span>
+                </div>
+              </div>
+              <div class="feature-item">
+                <span class="f-icon">🔖</span>
+                <div>
+                  <strong>Cloud Bookmarks</strong>
+                  <span>Auto-saved progress</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="showcase-actions">
+              <a href="Books.html" class="btn btn-library-cta">
+                <span>Explore All Books</span>
+                <span class="arrow">➔</span>
+              </a>
+              <span class="showcase-count-pill">✨ 16+ Curated Volumes Ready to Read</span>
+            </div>
+          </div>
+
+          <!-- 3D Book Visual Showcase Stack -->
+          <div class="showcase-visual">
+            <div class="book-fan-stack">
+              <div class="fan-book fan-book-1">
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=350&q=80" alt="The Alchemist">
+              </div>
+              <div class="fan-book fan-book-2">
+                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=350&q=80" alt="Atomic Habits">
+              </div>
+              <div class="fan-book fan-book-3">
+                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=350&q=80" alt="Pride and Prejudice">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -448,7 +511,7 @@
           <a href="#home">Home</a>
           <a href="#categories">Categories</a>
           <a href="#featured">Featured Books</a>
-          <a href="books.html">All Books</a>
+          <a href="Books.html" style="color: #e8c77b; font-weight: 700;">📚 All Books (Full Library) ↗</a>
         </div>
 
         <div class="footer-column">
@@ -488,15 +551,13 @@
     <p class="modal-author" id="modalAuthor"></p>
     <p id="modalDescription"></p>
     <p class="modal-note">
-      This is a book preview. Full reading functionality will be
-      connected with the Book Reader module.
+      Enjoy reading sample chapters, adjusting themes, and tracking reading progress in our online reader.
     </p>
-    <button class="btn btn-primary" id="modalDone">Done</button>
+    <div style="display: flex; gap: 10px; margin-top: 20px; align-items: center; justify-content: flex-end;">
+      <button class="btn btn-outline" id="modalDone" type="button">Close</button>
+      <a class="btn btn-primary" id="modalReadBtn" href="reader/reader.html?id=alchemist" style="text-decoration: none; padding: 12px 20px; font-weight: 600;">📖 Start Reading</a>
+    </div>
   </dialog>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./config/supabase.js"></script>
 
 </body>
 </html>

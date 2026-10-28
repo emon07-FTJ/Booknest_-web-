@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest+ | Sign Up</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>BookNest<span>+</span></h1>
+        <p>Create your account to start your reading journey.</p>
+        <a class="home-icon-link" href="index.html" aria-label="Go to homepage" title="Go to homepage">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m3 10 9-7 9 7"></path>
+                <path d="M5.5 9v11h13V9M9.5 20v-7h5v7"></path>
+            </svg>
+        </a>
+    </header>
+
+    <main class="container">
+        <section class="auth-card">
+
+            <div class="tabs">
+                <button type="button" class="tab"
+                    onclick="window.location.href='login.html'">
+                    Login
+                </button>
+
+                <button type="button" class="tab active"
+                    onclick="window.location.href='signup.html'">
+                    Sign Up
+                </button>
+            </div>
+
+            <h2>Create Account</h2>
+            <p class="subtitle">Sign up to discover and read amazing books.</p>
+
+            <form id="signupForm">
+                <label for="signupUsername">Username</label>
+                <input
+                    type="text"
+                    id="signupUsername"
+                    placeholder="Enter your username"
+                    required
+                >
+
+                <label for="signupEmail">Email Address</label>
+                <input
+                    type="email"
+                    id="signupEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="signupPassword">Password</label>
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                    minlength="6"
+                    required
+                >
+
+                <button type="submit" class="submit-btn">Sign Up</button>
+
+                <p id="signupMessage" class="message" role="status"></p>
+            </form>
+
+            <p class="switch-text">
+                Already have an account?
+                <button type="button" class="text-btn"
+                    onclick="window.location.href='login.html'">
+                    Login
+                </button>
+            </p>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 BookNest+. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./config/supabase.js"></script>
+    <script src="signup.js"></script>
+</body>
+</html>

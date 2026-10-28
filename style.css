@@ -152,7 +152,40 @@ p {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* All action buttons in nav get a consistent fixed-ish width */
+.nav-actions .btn,
+.nav-actions .submit-writing-link,
+.nav-actions .wishlist-link {
+  min-width: 110px;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/* Profile button — a bit wider for username */
+.nav-actions .profile-link {
+  min-width: 120px;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Favourites link stays compact */
+.nav-actions .wishlist-link {
+  min-width: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Admin panel button — fixed width */
+.nav-actions .admin-panel-btn {
+  min-width: 130px;
 }
 
 .wishlist-link {
@@ -723,6 +756,253 @@ p {
 }
 
 
+/* ==========================================
+   LIBRARY SHOWCASE BANNER (GRAND REPOSITORY)
+   ========================================== */
+
+.library-showcase-section {
+  padding: 40px 0 70px;
+}
+
+.library-showcase-card {
+  background: linear-gradient(135deg, #133126 0%, #1c4535 55%, #153427 100%);
+  border-radius: 20px;
+  padding: 48px 52px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(19, 49, 38, 0.25);
+  border: 1px solid rgba(232, 199, 123, 0.25);
+}
+
+.library-showcase-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(232, 199, 123, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.showcase-content {
+  flex: 1;
+  max-width: 620px;
+  position: relative;
+  z-index: 2;
+}
+
+.showcase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232, 199, 123, 0.15);
+  border: 1px solid rgba(232, 199, 123, 0.35);
+  color: #e8c77b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.showcase-content h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: white;
+  margin-bottom: 14px;
+}
+
+.showcase-desc {
+  color: #d6e4dc;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.showcase-desc strong {
+  color: #f7e6be;
+}
+
+.showcase-features {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.f-icon {
+  font-size: 20px;
+}
+
+.feature-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-item strong {
+  font-size: 13px;
+  color: white;
+}
+
+.feature-item span {
+  font-size: 11px;
+  color: #a8c2b4;
+}
+
+.showcase-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.btn-library-cta {
+  background: #e8c77b;
+  color: #133126;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(232, 199, 123, 0.3);
+  transition: all 0.25s ease;
+}
+
+.btn-library-cta:hover {
+  background: #f3d898;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(232, 199, 123, 0.45);
+}
+
+.btn-library-cta .arrow {
+  transition: transform 0.2s;
+}
+
+.btn-library-cta:hover .arrow {
+  transform: translateX(4px);
+}
+
+.showcase-count-pill {
+  color: #c9ded3;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* 3D Visual Book Fan Stack */
+.showcase-visual {
+  position: relative;
+  width: 300px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.book-fan-stack {
+  position: relative;
+  width: 170px;
+  height: 230px;
+}
+
+.fan-book {
+  position: absolute;
+  width: 160px;
+  height: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.fan-book img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fan-book-1 {
+  top: 0;
+  left: 0;
+  transform: rotate(-10deg) translate(-20px, 10px);
+  z-index: 1;
+}
+
+.fan-book-2 {
+  top: 0;
+  left: 10px;
+  transform: rotate(6deg) translate(25px, -5px);
+  z-index: 2;
+}
+
+.fan-book-3 {
+  top: 0;
+  left: 5px;
+  transform: rotate(-2deg) translate(0, 5px);
+  z-index: 3;
+}
+
+.library-showcase-card:hover .fan-book-1 {
+  transform: rotate(-16deg) translate(-36px, 8px);
+}
+
+.library-showcase-card:hover .fan-book-2 {
+  transform: rotate(12deg) translate(40px, -12px);
+}
+
+.library-showcase-card:hover .fan-book-3 {
+  transform: scale(1.05) translate(0, -2px);
+}
+
+@media (max-width: 900px) {
+  .library-showcase-card {
+    flex-direction: column;
+    padding: 36px 24px;
+    text-align: center;
+  }
+
+  .showcase-content {
+    max-width: 100%;
+  }
+
+  .showcase-features {
+    justify-content: center;
+  }
+
+  .showcase-actions {
+    justify-content: center;
+  }
+
+  .showcase-visual {
+    margin-top: 10px;
+  }
+}
+
+
 /* COMMUNITY BANNER */
 
 .community-section {
@@ -993,10 +1273,15 @@ p {
     order: 4;
     width: 100%;
     padding-bottom: 13px;
+    flex-wrap: wrap;
   }
 
-  .nav-actions .btn {
+  .nav-actions .btn,
+  .nav-actions .submit-writing-link,
+  .nav-actions .wishlist-link {
     flex: 1;
+    min-width: unset;
+    max-width: unset;
   }
 
   .wishlist-link span {
@@ -1233,13 +1518,19 @@ p {
     }
 }
 .submit-writing-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: #234b3c;
     color: white;
     padding: 10px 16px;
+    min-height: 43px;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 13px;
+    white-space: nowrap;
+    box-sizing: border-box;
     transition: background 0.2s ease;
 }
 
