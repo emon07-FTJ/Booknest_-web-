@@ -209,14 +209,27 @@ async function updateStatus(id, newStatus) {
     if (!client) return;
 
     try {
-        const { error } = await client
+        const { data, error } = await client
             .from("submissions")
             .update({ status: newStatus })
-            .eq("id", id);
+            .eq("id", id)
+            .select();
 
         if (error) {
             console.error("Update error:", error);
             alert("Could not update submission: " + error.message);
+            return;
+        }
+
+        // RLS blocks silently: PostgREST returns 0 updated rows and NO error.
+        // Detect that case and tell the user the exact cause.
+        if (!data || data.length === 0) {
+            console.error("Update affected 0 rows. The Supabase RLS UPDATE policy for admins is probably missing.");
+            alert(
+                "⚠️ No rows were updated.\n\n" +
+                "This means Supabase Row Level Security blocked the update.\n" +
+                "Run the admin UPDATE policy SQL in Supabase → SQL Editor (see project docs)."
+            );
             return;
         }
 
