@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your BookNest+ reading profile, favourites, and progress.">
+  <title>My Profile | BookNest+</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="profile.css">
+  <script src="profile.js" defer></script>
+</head>
+<body>
+  <header class="profile-header">
+    <a class="profile-logo" href="index.html" aria-label="BookNest+ home">
+      <span class="logo-icon">B+</span>
+      <span>BookNest<span class="logo-plus">+</span></span>
+    </a>
+    <div class="profile-header-actions">
+      <a class="home-icon-link" href="index.html" aria-label="Go to homepage" title="Go to homepage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 10 9-7 9 7"></path>
+          <path d="M5.5 9v11h13V9M9.5 20v-7h5v7"></path>
+        </svg>
+      </a>
+      <a class="greeting-link" href="profile.html">Hi, <span data-first-name>Nawshin</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="profile-intro">
+      <div class="profile-container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a><span aria-hidden="true">/</span><span>My Profile</span>
+        </nav>
+        <h1>Welcome back, <span data-profile-name>Nawshin</span>.</h1>
+        <p>Your books, your goals and your account — all in one place.</p>
+      </div>
+    </section>
+
+    <div class="profile-container profile-layout">
+      <aside class="reader-card">
+        <div class="avatar" aria-hidden="true"><span data-initial>N</span><span class="avatar-star">✦</span></div>
+        <h2 data-profile-name>Nawshin</h2>
+        <p class="profile-email" data-profile-email>nawshin@email.com</p>
+        <p class="reader-bio" data-profile-bio>Reader of mystery and slow, thoughtful fiction. Always one chapter away from bedtime.</p>
+        <div class="interest-tags" aria-label="Reading interests">
+          <span data-profile-genre>Mystery</span>
+        </div>
+        <button class="edit-profile" type="button" data-open-settings>Edit profile</button>
+        <div class="reader-facts">
+          <p>Member since <strong>March 2026</strong></p>
+          <p>Location <strong data-profile-location>Dhaka, Bangladesh</strong></p>
+          <p>Favourite format <strong>Paperback</strong></p>
+        </div>
+        <div class="reading-goal">
+          <h3>2026 reading goal</h3>
+          <div class="goal-track" role="progressbar" aria-label="2026 reading goal" aria-valuemin="0" aria-valuemax="20" aria-valuenow="12">
+            <span></span>
+          </div>
+          <p><span data-goal-completed>12</span> of <span data-reading-goal>20</span> books completed</p>
+        </div>
+      </aside>
+
+      <section class="profile-content" aria-label="Reading dashboard">
+        <div class="stats-grid" aria-label="Reading statistics">
+          <article class="stat-card"><strong data-favourite-count>0</strong><span>Favourite books</span></article>
+          <article class="stat-card"><strong data-reading-count>0</strong><span>Currently reading</span></article>
+          <article class="stat-card"><strong data-completed-count>0</strong><span>Books completed</span></article>
+          <article class="stat-card"><strong data-review-count>0</strong><span>Reviews written</span></article>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="profile-tabs" role="tablist" aria-label="Profile sections">
+            <button class="profile-tab active" id="tab-overview" type="button" role="tab" aria-selected="true" aria-controls="panel-overview" data-profile-tab="overview">Overview</button>
+            <button class="profile-tab" id="tab-favourites" type="button" role="tab" aria-selected="false" aria-controls="panel-favourites" data-profile-tab="favourites" tabindex="-1">Favourites</button>
+            <button class="profile-tab" id="tab-reading" type="button" role="tab" aria-selected="false" aria-controls="panel-reading" data-profile-tab="reading" tabindex="-1">Currently reading</button>
+            <button class="profile-tab" id="tab-completed" type="button" role="tab" aria-selected="false" aria-controls="panel-completed" data-profile-tab="completed" tabindex="-1">Completed</button>
+            <button class="profile-tab" id="tab-reviews" type="button" role="tab" aria-selected="false" aria-controls="panel-reviews" data-profile-tab="reviews" tabindex="-1">My reviews</button>
+            <button class="profile-tab" id="tab-settings" type="button" role="tab" aria-selected="false" aria-controls="panel-settings" data-profile-tab="settings" tabindex="-1">Account settings</button>
+          </div>
+
+          <section class="tab-panel" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" data-profile-panel="overview">
+            <div class="panel-heading"><h2>Continue reading</h2></div>
+            <div class="book-grid" data-book-list="reading-overview"></div>
+            <p class="book-list-empty" data-book-empty="reading-overview" hidden>
+              No books in progress yet. Open a book's details and choose “Start reading”.
+            </p>
+
+            <div class="panel-heading favourites-heading">
+              <h2>Recently added favourites</h2>
+              <button class="text-link" type="button" data-open-favourites>View all</button>
+            </div>
+            <div class="book-grid" data-book-list="recent"></div>
+            <p class="book-list-empty" data-book-empty="recent" hidden>
+              No favourites yet. Use the heart buttons on the home page to save books.
+            </p>
+          </section>
+
+          <section class="tab-panel" id="panel-favourites" role="tabpanel" aria-labelledby="tab-favourites" data-profile-panel="favourites" hidden>
+            <div class="panel-heading"><h2>Your favourite books</h2></div>
+            <div class="book-grid" data-book-list="favourites"></div>
+            <p class="book-list-empty" data-book-empty="favourites" hidden>
+              No favourites yet. Use the heart buttons on the home page to save books.
+            </p>
+          </section>
+
+          <section class="tab-panel" id="panel-reading" role="tabpanel" aria-labelledby="tab-reading" data-profile-panel="reading" hidden>
+            <div class="panel-heading"><h2>Currently reading</h2></div>
+            <div class="book-grid" data-book-list="reading"></div>
+            <p class="book-list-empty" data-book-empty="reading" hidden>
+              No books in progress. Open a book's details and choose “Start reading”.
+            </p>
+          </section>
+
+          <section class="tab-panel" id="panel-completed" role="tabpanel" aria-labelledby="tab-completed" data-profile-panel="completed" hidden>
+            <div class="panel-heading"><h2>Completed books</h2></div>
+            <div class="book-grid" data-book-list="completed"></div>
+            <p class="book-list-empty" data-book-empty="completed" hidden>
+              No completed books yet. Mark a book as completed from its details.
+            </p>
+          </section>
+
+          <section class="tab-panel" id="panel-reviews" role="tabpanel" aria-labelledby="tab-reviews" data-profile-panel="reviews" hidden>
+            <div class="panel-heading"><h2>My reviews</h2></div>
+            <div class="review-list" data-review-list></div>
+            <p class="book-list-empty" data-review-empty hidden>
+              No reviews yet. Open a book's details to write your first review.
+            </p>
+          </section>
+
+          <section class="tab-panel" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" data-profile-panel="settings" hidden>
+            <div class="panel-heading"><h2>Account settings</h2></div>
+            <form class="settings-form" id="profileForm">
+              <div class="settings-grid">
+                <div class="settings-field">
+                  <label for="profileNameInput">Full name</label>
+                  <input id="profileNameInput" name="name" type="text" autocomplete="name" required>
+                </div>
+                <div class="settings-field">
+                  <label for="profileUsernameInput">Username</label>
+                  <input id="profileUsernameInput" name="username" type="text" autocomplete="username" required>
+                </div>
+                <div class="settings-field">
+                  <label for="profileEmailInput">Email</label>
+                  <input id="profileEmailInput" name="email" type="email" autocomplete="email" required>
+                </div>
+                <div class="settings-field">
+                  <label for="profilePhoneInput">Phone</label>
+                  <input id="profilePhoneInput" name="phone" type="tel" autocomplete="tel" placeholder="+880 1XXX-XXXXXX">
+                </div>
+                <div class="settings-field">
+                  <label for="profileLocationInput">Location</label>
+                  <input id="profileLocationInput" name="location" type="text" autocomplete="address-level2" required>
+                </div>
+                <div class="settings-field">
+                  <label for="profileGenreInput">Favourite genre</label>
+                  <select id="profileGenreInput" name="genre">
+                    <option>Mystery</option>
+                    <option>Fiction</option>
+                    <option>Self-growth</option>
+                    <option>Adventure</option>
+                    <option>Education</option>
+                    <option>Biography</option>
+                  </select>
+                </div>
+                <div class="settings-field settings-field-wide">
+                  <label for="profileBioInput">Bio</label>
+                  <textarea id="profileBioInput" name="bio" rows="3" maxlength="240"></textarea>
+                </div>
+                <div class="settings-field">
+                  <label for="currentPasswordInput">Current password</label>
+                  <input id="currentPasswordInput" name="currentPassword" type="password" autocomplete="current-password" placeholder="Enter current password">
+                </div>
+                <div class="settings-field">
+                  <label for="newPasswordInput">New password</label>
+                  <input id="newPasswordInput" name="newPassword" type="password" autocomplete="new-password" minlength="6" placeholder="Leave blank to keep current">
+                </div>
+              </div>
+              <button class="forgot-password" id="forgotPasswordButton" type="button">Forgot password?</button>
+              <div class="settings-field goal-field">
+                <label for="readingGoalInput">Yearly reading goal</label>
+                <input id="readingGoalInput" name="readingGoal" type="number" min="1" max="365" required>
+              </div>
+              <p class="form-message" id="profileMessage" role="status" aria-live="polite"></p>
+              <div class="settings-actions">
+                <button class="cancel-profile" id="cancelProfileButton" type="button">Cancel</button>
+                <button class="save-profile" type="submit">Save changes</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+  <dialog class="book-detail-modal" id="profileBookModal" aria-labelledby="profileBookTitle">
+    <button class="book-modal-close" type="button" aria-label="Close book details">×</button>
+    <span class="book-modal-category" id="profileBookCategory"></span>
+    <h2 id="profileBookTitle"></h2>
+    <p class="book-modal-author" id="profileBookAuthor"></p>
+    <p class="book-modal-meta" id="profileBookYear"></p>
+    <p class="book-modal-description" id="profileBookDescription"></p>
+    <div class="profile-book-actions">
+      <button class="profile-book-action" type="button" data-book-action="reading">Start reading</button>
+      <button class="profile-book-action" type="button" data-book-action="completed">Mark completed</button>
+    </div>
+    <p class="form-message" id="profileBookMessage" role="status" aria-live="polite"></p>
+    <form class="profile-review-form" id="profileReviewForm">
+      <h3>Write a review</h3>
+      <label for="profileReviewRating">Your rating</label>
+      <select id="profileReviewRating">
+        <option value="5">★★★★★ — Loved it</option>
+        <option value="4">★★★★☆ — Really good</option>
+        <option value="3">★★★☆☆ — It was good</option>
+        <option value="2">★★☆☆☆ — Not for me</option>
+        <option value="1">★☆☆☆☆ — Disappointing</option>
+      </select>
+      <label for="profileReviewText">Your review</label>
+      <textarea id="profileReviewText" rows="3" maxlength="500" required></textarea>
+      <button class="save-profile" type="submit">Save review</button>
+    </form>
+  </dialog>
+</body>
+</html>

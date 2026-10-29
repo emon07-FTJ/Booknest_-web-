@@ -1,0 +1,306 @@
+```css
+/* ===== Global Reset ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f1e8;
+    color: #26352d;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Header ===== */
+.site-header {
+    position: relative;
+    text-align: center;
+    padding: 28px 15px;
+    background: #234b3c;
+    color: #ffffff;
+}
+
+.home-icon-link {
+    position: absolute;
+    top: 50%;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 9px;
+    color: #ffffff;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.home-icon-link:hover {
+    background: #e8c77b;
+    color: #234b3c;
+}
+
+.home-icon-link svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+
+.home-icon-link:focus-visible {
+    outline: 2px solid #e8c77b;
+    outline-offset: 3px;
+}
+
+.site-header h1 {
+    font-size: 30px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.site-header h1 span {
+    color: #e8c77b;
+}
+
+.site-header p {
+    color: #e4eee8;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ===== Main Container ===== */
+.container {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 16px;
+}
+
+/* ===== Login / Signup Card ===== */
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 8px 25px rgba(35, 75, 60, 0.12);
+}
+
+/* ===== Tabs ===== */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 26px;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 7px;
+    background: #edf1ed;
+    color: #234b3c;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tab:hover {
+    background: #dce7df;
+}
+
+.tab.active {
+    background: #234b3c;
+    color: #ffffff;
+}
+
+/* ===== Form Heading ===== */
+.auth-card h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #26352d;
+}
+
+.subtitle {
+    color: #68766e;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+/* ===== Form Labels ===== */
+.auth-card label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #26352d;
+    margin: 15px 0 7px;
+}
+
+/* ===== Input Fields ===== */
+.auth-card input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccd6cf;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #26352d;
+    outline: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-card input::placeholder {
+    color: #929b95;
+}
+
+.auth-card input:focus {
+    border-color: #36785c;
+    box-shadow: 0 0 0 3px rgba(54, 120, 92, 0.12);
+}
+
+/* ===== Submit Button ===== */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    margin-top: 22px;
+    background: #234b3c;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #18392d;
+}
+
+.submit-btn:focus-visible,
+.tab:focus-visible,
+.text-btn:focus-visible {
+    outline: 2px solid #36785c;
+    outline-offset: 3px;
+}
+
+/* ===== Login / Signup Message ===== */
+.message {
+    font-size: 14px;
+    margin-top: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.message.success {
+    color: #247342;
+}
+
+.message.error {
+    color: #b42318;
+}
+
+/* ===== Switch Login / Signup ===== */
+.switch-text {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #68766e;
+    margin-top: 20px;
+}
+
+.text-btn {
+    display: inline;
+    border: none;
+    background: none;
+    color: #286b4c;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.text-btn:hover {
+    text-decoration: underline;
+}
+
+/* ===== Footer ===== */
+footer {
+    text-align: center;
+    padding: 18px 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #68766e;
+}
+
+/* ===== Hidden Elements ===== */
+[hidden] {
+    display: none !important;
+}
+
+/* ===== Tablet and Mobile ===== */
+@media (max-width: 480px) {
+    .site-header {
+        padding: 22px 12px;
+    }
+
+    .site-header h1 {
+        font-size: 27px;
+    }
+
+    .site-header p {
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 24px 14px;
+    }
+
+    .auth-card {
+        padding: 22px 18px;
+        border-radius: 12px;
+    }
+
+    .auth-card h2 {
+        font-size: 21px;
+    }
+
+    .tabs {
+        gap: 8px;
+        margin-bottom: 23px;
+    }
+
+    .tab {
+        padding: 11px 8px;
+        font-size: 14px;
+    }
+
+    .auth-card input {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        padding: 13px;
+    }
+}
+```
